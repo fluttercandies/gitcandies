@@ -34,7 +34,7 @@ final ThemeData gitavTheme = ThemeData(
     toggleableActiveColor: Color(0xff5c6670),
     secondaryHeaderColor: Color(0xfff1f2f3),
     textSelectionColor: Color(0xffc7ccd1),
-    cursorColor: Color(0xff4285f4),
+    cursorColor: Color(0xff25292d),
     textSelectionHandleColor: Color(0xffabb3ba),
     backgroundColor: Color(0xffc7ccd1),
     dialogBackgroundColor: Color(0xffffffff),

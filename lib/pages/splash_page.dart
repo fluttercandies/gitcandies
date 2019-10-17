@@ -19,7 +19,7 @@ class _SplashPageState extends State<SplashPage>{
         SchedulerBinding.instance.addPostFrameCallback((_) {
             Future.delayed(const Duration(seconds: 2), () {
                 Constants.navigatorKey.currentState.push(PageRouteBuilder(
-                    transitionDuration: Duration(milliseconds: 1000),
+                    transitionDuration: Duration.zero,
                     pageBuilder: (_, __, ___) {
                         return FadeTransition(
                             opacity: __,
