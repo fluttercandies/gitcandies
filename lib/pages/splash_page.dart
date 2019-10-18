@@ -1,11 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:gitav/constants/assets.dart';
+
+import 'package:gitav/constants/resource.dart';
 import 'package:gitav/constants/constants.dart';
 import 'package:gitav/pages/login_page.dart';
-
 
 
 class SplashPage extends StatefulWidget {
@@ -45,8 +44,8 @@ class _SplashPageState extends State<SplashPage>{
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-                Image.asset(R.octocat),
-                Image.asset(R.logoWhite),
+                Image.asset(R.ASSETS_GITHUB_OCTOCAT_OCTOCAT_PNG),
+                Image.asset(R.ASSETS_GITHUB_LOGOS_LOGO_WHITE_PNG),
             ],
         ),
     );

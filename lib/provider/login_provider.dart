@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'package:gitav/constants/auth.dart';
+import 'package:gitav/configs/oauth_config.dart';
+import 'package:gitav/constants/apis.dart';
 import 'package:gitav/pages/main_page.dart';
 import 'package:gitav/provider/base_provider.dart';
 import 'package:gitav/provider/user_provider.dart';
@@ -14,8 +15,8 @@ class LoginProvider extends BaseProvider {
       return;
     }
     final auth = Authentication.withToken(token);
-    var client = createGitHubClient(auth: auth);
     try {
+      GitHub client = createGitHubClient(auth: auth);
       final user = await client.users.getCurrentUser();
       _onLoginSuccess(client, user, token);
     } catch (e) {
@@ -24,7 +25,7 @@ class LoginProvider extends BaseProvider {
     }
   }
 
-  Future<void> loginWithUserNameAndPassword(
+  Future<void> loginWithBasic(
       String username, String password) async {
     if (!checkInputEmpty(username, makeEmptyTip("username")) ||
         !checkInputEmpty(password, makeEmptyTip("username"))) {
@@ -35,7 +36,7 @@ class LoginProvider extends BaseProvider {
     final baseStr = base64.encode(bytes);
 
     final response =
-        await httpUtils.post("https://api.github.com/authorizations", {
+        await httpUtils.post("${API.host}/authorizations", {
       "Accept": "application/json",
       "Authorization": "Basic $baseStr"
     }, {
@@ -51,16 +52,7 @@ class LoginProvider extends BaseProvider {
       showToast("Login fail.");
       return;
     }
-
-    final auth = Authentication.withToken(token);
-    try {
-      var client = createGitHubClient(auth: auth);
-      final user = await client.users.getCurrentUser();
-      _onLoginSuccess(client, user, token);
-    } catch (e) {
-      print(e);
-      showToast("Login fail");
-    }
+    loginWithToken(token);
   }
 
   _onLoginSuccess(GitHub client, CurrentUser user, String token) {
