@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:gitav/provider/login_provider.dart';
+import 'package:gitav/provider/user_provider.dart';
 import 'package:provider/provider.dart';
 
 ChangeNotifierProvider<T> _buildProvider<T extends ChangeNotifier>(T value) {
@@ -9,5 +10,6 @@ ChangeNotifierProvider<T> _buildProvider<T extends ChangeNotifier>(T value) {
 List<SingleChildCloneableWidget> get providers => _providers;
 
 final _providers = [
-  _buildProvider(LoginProvider()),
+  _buildProvider<LoginProvider>(LoginProvider()),
+  _buildProvider<UserProvider>(UserProvider()),
 ];
