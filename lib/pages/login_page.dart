@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import 'package:gitav/constants/resource.dart';
 import 'package:gitav/constants/screens.dart';
-import 'package:gitav/provider/login_provider.dart';
+import 'package:gitav/providers/login_provider.dart';
 import 'package:gitav/widgets/waver.dart';
-import 'package:provider/provider.dart';
+
 
 enum LoginType { basic, token }
 

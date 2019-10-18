@@ -8,55 +8,55 @@ import 'package:gitav/pages/login_page.dart';
 
 
 class SplashPage extends StatefulWidget {
-    @override
-    _SplashPageState createState() => _SplashPageState();
+  @override
+  _SplashPageState createState() => _SplashPageState();
 }
 
 class _SplashPageState extends State<SplashPage>{
-    @override
-    void initState() {
-        SchedulerBinding.instance.addPostFrameCallback((_) {
-            Future.delayed(const Duration(seconds: 2), () {
-                Constants.navigatorKey.currentState.push(PageRouteBuilder(
-                    transitionDuration: Duration.zero,
-                    pageBuilder: (_, __, ___) {
-                        return FadeTransition(
-                            opacity: __,
-                            child: LoginPage(),
-                        );
-                    },
-                ));
-            });
-        });
-        super.initState();
-    }
+  @override
+  void initState() {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(seconds: 2), () {
+        Constants.navigatorKey.currentState.push(PageRouteBuilder(
+          transitionDuration: Duration.zero,
+          pageBuilder: (_, __, ___) {
+            return FadeTransition(
+              opacity: __,
+              child: LoginPage(),
+            );
+          },
+        ));
+      });
+    });
+    super.initState();
+  }
 
-    @override
-    void dispose() {
-        super.dispose();
-    }
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
-    Widget get cover => Container(
-        padding: const EdgeInsets.all(80.0),
-        decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
-        ),
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-                Image.asset(R.ASSETS_GITHUB_OCTOCAT_OCTOCAT_PNG),
-                Image.asset(R.ASSETS_GITHUB_LOGOS_LOGO_WHITE_PNG),
-            ],
-        ),
+  Widget get cover => Container(
+    padding: const EdgeInsets.all(80.0),
+    decoration: BoxDecoration(
+      color: Theme.of(context).primaryColor,
+    ),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Image.asset(R.ASSETS_GITHUB_OCTOCAT_OCTOCAT_PNG),
+        Image.asset(R.ASSETS_GITHUB_LOGOS_LOGO_WHITE_PNG),
+      ],
+    ),
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return AnnotatedRegion(
+      value: SystemUiOverlayStyle.light,
+      child: Scaffold(
+        body: cover,
+      ),
     );
-
-    @override
-    Widget build(BuildContext context) {
-        return AnnotatedRegion(
-            value: SystemUiOverlayStyle.light,
-            child: Scaffold(
-                body: cover,
-            ),
-        );
-    }
+  }
 }
