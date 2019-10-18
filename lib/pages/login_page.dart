@@ -9,18 +9,15 @@ import 'package:gitav/providers/login_provider.dart';
 import 'package:gitav/widgets/waver.dart';
 
 
-enum LoginType { basic, token }
-
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final PageController _pageController = PageController();
   bool covered = true;
   bool obscured = true;
-  String _username, _password, _token;
+  String _username, _password;
 
   double get buttonHeight => 46.0;
 
@@ -121,16 +118,7 @@ class _LoginPageState extends State<LoginPage> {
     top: 200.0,
     bottom: 0.0,
     width: Screen.width,
-    child: PageView(
-      controller: _pageController,
-      physics: const NeverScrollableScrollPhysics(
-        parent: const ClampingScrollPhysics(),
-      ),
-      children: <Widget>[
-        basicLoginField,
-        tokenLoginField,
-      ],
-    ),
+    child: basicLoginField,
   );
 
   Widget get basicLoginField => Column(
@@ -145,28 +133,7 @@ class _LoginPageState extends State<LoginPage> {
             children: <Widget>[
               usernameField,
               passwordField,
-              loginButton(LoginType.basic),
-              loginViaButton(LoginType.token),
-            ],
-          ),
-        ),
-      ),
-    ],
-  );
-
-  Widget get tokenLoginField => Column(
-    children: <Widget>[
-      Expanded(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 40.0,
-            vertical: 20.0,
-          ),
-          child: Column(
-            children: <Widget>[
-              tokenField,
-              loginButton(LoginType.token),
-              loginViaButton(LoginType.basic),
+              loginButton,
             ],
           ),
         ),
@@ -238,33 +205,7 @@ class _LoginPageState extends State<LoginPage> {
     ),
   );
 
-  Widget get tokenField => Container(
-    child: TextField(
-      decoration: InputDecoration(
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 6.0,
-          vertical: 10.0,
-        ),
-        labelText: "Token",
-        labelStyle: Theme.of(context).textTheme.body1.copyWith(
-          fontSize: 16.0,
-        ),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.grey[350],
-          ),
-        ),
-        prefixIcon: Icon(Icons.vpn_key),
-      ),
-      style: fieldStyle,
-      strutStyle: fieldStrutStyle,
-      onChanged: (String token) {
-        _token = token;
-      },
-    ),
-  );
-
-  Widget loginButton(LoginType type) => Container(
+  Widget get loginButton => Container(
     margin: EdgeInsets.only(
       top: buttonHeight / 2,
     ),
@@ -284,79 +225,14 @@ class _LoginPageState extends State<LoginPage> {
         ),
         onPressed: () async {
           var loginProvider = Provider.of<LoginProvider>(context);
-          switch (type) {
-            case LoginType.basic:
-              loginProvider.loginWithBasic(
-                _username,
-                _password,
-              );
-              break;
-            case LoginType.token:
-              loginProvider.loginWithToken(_token);
-              break;
-          }
+          loginProvider.loginWithBasic(
+            _username,
+            _password,
+          );
         },
       ),
     ),
   );
-
-  Widget loginViaButton(LoginType type) {
-    String _t;
-    switch (type) {
-      case LoginType.basic:
-        _t = "Basic";
-        break;
-      case LoginType.token:
-        _t = "Token";
-        break;
-    }
-    return Container(
-      margin: EdgeInsets.only(
-        top: buttonHeight / 2,
-      ),
-      height: buttonHeight,
-      decoration: BoxDecoration(
-        border: Border.all(
-          width: 1.2,
-          color: Theme.of(context).primaryColor,
-        ),
-        borderRadius: BorderRadius.circular(buttonHeight / 2),
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(buttonHeight / 2),
-        child: FlatButton(
-          splashColor: Theme.of(context).canvasColor,
-          color: Theme.of(context).dividerColor,
-          child: Center(
-            child: Text(
-              "Login Via $_t",
-              style: Theme.of(context).textTheme.title.copyWith(
-                color: Colors.grey[850],
-              ),
-            ),
-          ),
-          onPressed: () async {
-            switch (type) {
-              case LoginType.basic:
-                _pageController.animateToPage(
-                  0,
-                  duration: kTabScrollDuration,
-                  curve: Curves.fastOutSlowIn,
-                );
-                break;
-              case LoginType.token:
-                _pageController.animateToPage(
-                  1,
-                  duration: kTabScrollDuration,
-                  curve: Curves.fastOutSlowIn,
-                );
-                break;
-            }
-          },
-        ),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -365,7 +241,7 @@ class _LoginPageState extends State<LoginPage> {
       child: Scaffold(
         body: Stack(
           children: <Widget>[
-            waver,
+//            waver,
             header,
             content,
             cover,

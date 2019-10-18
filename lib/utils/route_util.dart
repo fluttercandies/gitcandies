@@ -4,10 +4,10 @@ import 'package:gitav/constants/constants.dart';
 import 'package:gitav/pages/login_page.dart';
 
 
-class RouteUtil {
+class RouteUtils {
   static Map<String, WidgetBuilder> get routes => {
-        "/login": (_) => LoginPage(),
-      };
+    "/login": (_) => LoginPage(),
+  };
 }
 
 class FadePageTransitionsBuilder extends PageTransitionsBuilder {

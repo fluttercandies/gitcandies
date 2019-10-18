@@ -1,12 +1,15 @@
 import 'dart:convert';
 
+import 'package:github/server.dart';
+import 'package:oktoast/oktoast.dart';
+
 import 'package:gitav/configs/oauth_config.dart';
 import 'package:gitav/constants/apis.dart';
 import 'package:gitav/pages/main_page.dart';
-import 'package:gitav/provider/base_provider.dart';
-import 'package:gitav/provider/user_provider.dart';
-import 'package:github/server.dart';
-import 'package:oktoast/oktoast.dart';
+import 'package:gitav/providers/base_provider.dart';
+import 'package:gitav/providers/user_provider.dart';
+import 'package:gitav/utils/shared_preferences_utils.dart';
+
 
 class LoginProvider extends BaseProvider {
   Future<void> loginWithToken(String token) async {
@@ -55,17 +58,15 @@ class LoginProvider extends BaseProvider {
     loginWithToken(token);
   }
 
-  _onLoginSuccess(GitHub client, CurrentUser user, String token) {
+  _onLoginSuccess(GitHub client, CurrentUser user, String token) async {
+    await SpUtils.setToken(token);
     github = client;
     final userProvider = getProvider<UserProvider>();
     userProvider.currentUser = user;
     showToast("登录成功");
 
-    // Todo: Save token to SP.
     route.pushWidget(
-      MainPage(
-        title: "home",
-      ),
+      MainPage(),
       replaceRoot: true,
     );
   }

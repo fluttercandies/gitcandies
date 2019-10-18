@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart';
-import 'package:gitav/provider/login_provider.dart';
-import 'package:gitav/provider/user_provider.dart';
+import 'package:gitav/providers/login_provider.dart';
+import 'package:gitav/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+
 
 ChangeNotifierProvider<T> _buildProvider<T extends ChangeNotifier>(T value) {
   return ChangeNotifierProvider<T>.value(value: value);

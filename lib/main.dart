@@ -7,9 +7,11 @@ import 'package:gitav/constants/themes.dart';
 import 'package:gitav/pages/splash_page.dart';
 import 'package:gitav/providers/providers.dart';
 import 'package:gitav/utils/route_util.dart';
+import 'package:gitav/utils/shared_preferences_utils.dart';
 
 
 void main() async {
+  await SpUtils.initInstance();
   runApp(GitApp());
 }
 
@@ -23,7 +25,7 @@ class GitApp extends StatelessWidget {
           navigatorKey: Constants.navigatorKey,
           title: 'Flutter Demo',
           theme: gitavTheme,
-          routes: RouteUtil.routes,
+          routes: RouteUtils.routes,
           home: SplashPage(),
         ),
       ),

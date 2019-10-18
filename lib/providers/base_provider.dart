@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:gitav/utils/http_utils.dart';
-import 'package:gitav/utils/route_util.dart';
 import 'package:github/server.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
+
+import 'package:gitav/utils/http_utils.dart';
+import 'package:gitav/utils/route_util.dart';
+
 
 class BaseProvider extends ChangeNotifier with InputCheckMixin {
   static GitHub _gitHub;
