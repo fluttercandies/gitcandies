@@ -282,11 +282,16 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             onPressed: () async {
+              var loginProvider = Provider.of<LoginProvider>(context);
               switch (type) {
                 case LoginType.basic:
+                  loginProvider.loginWithUserNameAndPassword(
+                    _username,
+                    _password,
+                  );
                   break;
                 case LoginType.token:
-                  Provider.of<LoginProvider>(context).loginWithToken(_token);
+                  loginProvider.loginWithToken(_token);
                   break;
               }
             },
