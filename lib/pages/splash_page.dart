@@ -3,8 +3,11 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
 import 'package:gitav/constants/resource.dart';
-import 'package:gitav/constants/constants.dart';
 import 'package:gitav/pages/login_page.dart';
+import 'package:gitav/providers/login_provider.dart';
+import 'package:gitav/utils/route_util.dart';
+import 'package:gitav/utils/shared_preferences_utils.dart';
+import 'package:provider/provider.dart';
 
 
 class SplashPage extends StatefulWidget {
@@ -16,17 +19,7 @@ class _SplashPageState extends State<SplashPage>{
   @override
   void initState() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(seconds: 2), () {
-        Constants.navigatorKey.currentState.push(PageRouteBuilder(
-          transitionDuration: Duration.zero,
-          pageBuilder: (_, __, ___) {
-            return FadeTransition(
-              opacity: __,
-              child: LoginPage(),
-            );
-          },
-        ));
-      });
+      navigate();
     });
     super.initState();
   }
@@ -34,6 +27,16 @@ class _SplashPageState extends State<SplashPage>{
   @override
   void dispose() {
     super.dispose();
+  }
+
+  void navigate() {
+    Future.delayed(const Duration(seconds: 2), () {
+      if (SpUtils.hasToken) {
+        Provider.of<LoginProvider>(context).loginWithToken(SpUtils.token);
+      } else {
+        RouteHelper().pushWidget(LoginPage(), replaceRoot: true);
+      }
+    });
   }
 
   Widget get cover => Container(

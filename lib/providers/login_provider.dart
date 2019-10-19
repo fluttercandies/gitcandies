@@ -10,7 +10,6 @@ import 'package:gitav/providers/base_provider.dart';
 import 'package:gitav/providers/user_provider.dart';
 import 'package:gitav/utils/shared_preferences_utils.dart';
 
-
 class LoginProvider extends BaseProvider {
   Future<void> loginWithToken(String token) async {
     if (!checkInputEmpty(token, makeEmptyTip("token"))) {
@@ -28,22 +27,25 @@ class LoginProvider extends BaseProvider {
     }
   }
 
-  Future<void> loginWithBasic(
-      String username, String password) async {
+  Future<void> loginWithBasic(String username, String password) async {
     if (!checkInputEmpty(username, makeEmptyTip("username")) ||
-        !checkInputEmpty(password, makeEmptyTip("username"))) {
+        !checkInputEmpty(password, makeEmptyTip("password"))) {
       return;
     }
 
     final bytes = utf8.encode("$username:$password");
     final baseStr = base64.encode(bytes);
 
-    final response =
-        await httpUtils.post("${API.host}/authorizations", {
+    final response = await httpUtils.post("${API.host}/authorizations", {
       "Accept": "application/json",
       "Authorization": "Basic $baseStr"
     }, {
-      "scopes": ["user", "repo", "gist", "notifications"],
+      "scopes": [
+        scopes.user,
+        scopes.repositories,
+        scopes.gist,
+        scopes.notifications
+      ],
       "note": "admin_script",
       "client_id": OAuthConfig.clientId,
       "client_secret": OAuthConfig.clientSecret,

@@ -8,6 +8,8 @@ class SpUtils {
     sp ??= await SharedPreferences.getInstance();
   }
 
+  static bool get hasToken => sp.getString(spToken) != null;
+  static String get token => sp.getString(spToken);
   static Future<void> setToken(String value) async =>
       await sp.setString(spToken, value);
 }
