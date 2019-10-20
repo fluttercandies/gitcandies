@@ -42,9 +42,10 @@ class LoginProvider extends BaseProvider {
     }, {
       "scopes": [
         scopes.user,
-        scopes.repositories,
         scopes.gist,
-        scopes.notifications
+        scopes.repositories,
+        scopes.notifications,
+        scopes.organizationsRead,
       ],
       "note": "admin_script",
       "client_id": OAuthConfig.clientId,
