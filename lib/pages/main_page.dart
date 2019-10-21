@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:gitcandies/pages/main_content_page.dart';
 import 'package:gitcandies/pages/notifications_page.dart';
 import 'package:gitcandies/pages/self_page.dart';
-import 'package:gitcandies/providers/login_provider.dart';
+import 'package:gitcandies/pages/user_page.dart';
 
 
 class MainPage extends StatefulWidget {
@@ -19,18 +19,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   List<Widget> pages = <Widget>[
     NotificationsPage(),
     SizedBox(),
-    Center(
-      child: Consumer<LoginProvider>(
-        builder: (context, provider, _) {
-          return IconButton(
-            icon: Icon(Icons.exit_to_app),
-            onPressed: () {
-              provider.logout();
-            },
-          );
-        },
-      ),
-    ),
+    UserPage(),
   ];
 
   PageController _controller = PageController(initialPage: 1);

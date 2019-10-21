@@ -75,6 +75,7 @@ class LoginProvider extends BaseProvider {
   }
 
   logout() async {
+    showToast("See you next time :>");
     github = null;
     final userProvider = getProvider<UserProvider>();
     userProvider.currentUser = null;

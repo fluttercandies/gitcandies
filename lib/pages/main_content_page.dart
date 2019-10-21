@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gitcandies/pages/user_page.dart';
 import 'package:provider/provider.dart';
 
 import 'package:gitcandies/constants/resource.dart';
@@ -23,6 +24,7 @@ class _MainContentPageState extends State<MainContentPage> with AutomaticKeepAli
   List<Widget> pages = <Widget>[
     NotificationsPage(),
     SizedBox(),
+    UserPage(),
     Center(
       child: Consumer<LoginProvider>(
         builder: (context, provider, _) {
