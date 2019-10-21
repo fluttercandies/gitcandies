@@ -3,12 +3,13 @@ import 'dart:convert';
 import 'package:github/server.dart';
 import 'package:oktoast/oktoast.dart';
 
-import 'package:gitav/configs/oauth_config.dart';
-import 'package:gitav/constants/apis.dart';
-import 'package:gitav/pages/main_page.dart';
-import 'package:gitav/providers/base_provider.dart';
-import 'package:gitav/providers/user_provider.dart';
-import 'package:gitav/utils/shared_preferences_utils.dart';
+import 'package:gitcandies/configs/oauth_config.dart';
+import 'package:gitcandies/constants/apis.dart';
+import 'package:gitcandies/pages/login_page.dart';
+import 'package:gitcandies/pages/main_page.dart';
+import 'package:gitcandies/providers/base_provider.dart';
+import 'package:gitcandies/providers/user_provider.dart';
+import 'package:gitcandies/utils/shared_preferences_utils.dart';
 
 class LoginProvider extends BaseProvider {
   Future<void> loginWithToken(String token) async {
@@ -45,7 +46,7 @@ class LoginProvider extends BaseProvider {
         scopes.gist,
         scopes.repositories,
         scopes.notifications,
-        scopes.organizationsRead,
+        scopes.organizationsAdministration,
       ],
       "note": "admin_script",
       "client_id": OAuthConfig.clientId,
@@ -66,10 +67,21 @@ class LoginProvider extends BaseProvider {
     github = client;
     final userProvider = getProvider<UserProvider>();
     userProvider.currentUser = user;
-    showToast("登录成功");
 
     route.pushWidget(
       MainPage(),
+      replaceRoot: true,
+    );
+  }
+
+  logout() async {
+    github = null;
+    final userProvider = getProvider<UserProvider>();
+    userProvider.currentUser = null;
+    await SpUtils.removeToken();
+
+    route.pushWidget(
+      LoginPage(),
       replaceRoot: true,
     );
   }

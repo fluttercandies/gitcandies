@@ -3,9 +3,9 @@ import 'package:github/server.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
 
-import 'package:gitav/constants/scopes.dart';
-import 'package:gitav/utils/http_utils.dart';
-import 'package:gitav/utils/route_util.dart';
+import 'package:gitcandies/constants/scopes.dart';
+import 'package:gitcandies/utils/http_utils.dart';
+import 'package:gitcandies/utils/route_util.dart';
 
 
 class BaseProvider extends ChangeNotifier with InputCheckMixin {

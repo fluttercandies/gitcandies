@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:github/server.dart';
 
-import 'package:gitav/providers/base_provider.dart';
+import 'package:gitcandies/providers/base_provider.dart';
 
 class NotificationsProvider extends BaseProvider {
   ActivityService get activities => github.activity;

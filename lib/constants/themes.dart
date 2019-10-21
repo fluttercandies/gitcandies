@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-final ThemeData gitavTheme = ThemeData(
+final ThemeData gitcandiesTheme = ThemeData(
   primarySwatch: MaterialColor(4280625453, {
     50: Color(0xfff1f2f3),
     100: Color(0xffe3e6e8),

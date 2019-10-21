@@ -3,19 +3,26 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import 'package:gitav/constants/resource.dart';
-import 'package:gitav/constants/screens.dart';
-import 'package:gitav/providers/login_provider.dart';
-import 'package:gitav/widgets/waver.dart';
+import 'package:gitcandies/constants/resource.dart';
+import 'package:gitcandies/constants/screens.dart';
+import 'package:gitcandies/providers/login_provider.dart';
+import 'package:gitcandies/widgets/waver.dart';
 
 
 class LoginPage extends StatefulWidget {
+  final bool pushFromSplash;
+
+  const LoginPage({
+    Key key,
+    this.pushFromSplash = false,
+  }) : super(key: key);
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool covered = true;
+  bool covered = false;
   bool obscured = true;
   String _username, _password;
 
@@ -34,8 +41,9 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
+    if (widget.pushFromSplash) covered = true;
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      setState(() {
+      if (covered) setState(() {
         covered = false;
       });
     });

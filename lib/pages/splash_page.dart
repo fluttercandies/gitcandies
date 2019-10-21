@@ -3,11 +3,11 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import 'package:gitav/constants/resource.dart';
-import 'package:gitav/pages/login_page.dart';
-import 'package:gitav/providers/login_provider.dart';
-import 'package:gitav/utils/route_util.dart';
-import 'package:gitav/utils/shared_preferences_utils.dart';
+import 'package:gitcandies/constants/resource.dart';
+import 'package:gitcandies/pages/login_page.dart';
+import 'package:gitcandies/providers/login_provider.dart';
+import 'package:gitcandies/utils/route_util.dart';
+import 'package:gitcandies/utils/shared_preferences_utils.dart';
 
 
 class SplashPage extends StatefulWidget {
@@ -34,7 +34,10 @@ class _SplashPageState extends State<SplashPage>{
       if (SpUtils.hasToken) {
         Provider.of<LoginProvider>(context).loginWithToken(SpUtils.token);
       } else {
-        RouteHelper().pushWidget(LoginPage(), replaceRoot: true);
+        RouteHelper().pushWidget(
+          LoginPage(pushFromSplash: true),
+          replaceRoot: true,
+        );
       }
     });
   }

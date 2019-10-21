@@ -1,4 +1,4 @@
-package com.alexv525.gitav
+package com.alexv525.gitcandies
 
 import android.os.Bundle
 

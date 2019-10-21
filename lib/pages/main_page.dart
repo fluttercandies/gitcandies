@@ -1,45 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:gitav/pages/notifications_page.dart';
+import 'package:provider/provider.dart';
+
+import 'package:gitcandies/pages/main_content_page.dart';
+import 'package:gitcandies/pages/notifications_page.dart';
+import 'package:gitcandies/pages/self_page.dart';
+import 'package:gitcandies/providers/login_provider.dart';
+
 
 class MainPage extends StatefulWidget {
   @override
   _MainPageState createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   final icons = [Icons.notifications, Icons.add, Icons.account_circle];
   final titles = ["Notifications", "测试1", "Mine"];
-  final pages = <Widget>[
+
+  List<Widget> pages = <Widget>[
     NotificationsPage(),
     SizedBox(),
-    SizedBox(),
+    Center(
+      child: Consumer<LoginProvider>(
+        builder: (context, provider, _) {
+          return IconButton(
+            icon: Icon(Icons.exit_to_app),
+            onPressed: () {
+              provider.logout();
+            },
+          );
+        },
+      ),
+    ),
   ];
 
-  int _tabIndex = 0;
+  PageController _controller = PageController(initialPage: 1);
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: IndexedStack(
-        children: pages,
-        index: _tabIndex,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          for (int i = 0; i < titles.length; i++)
-            BottomNavigationBarItem(
-              icon: Icon(icons[i]),
-              title: Text(titles[i]),
-            )
-          ,
-        ],
-        currentIndex: _tabIndex,
-        onTap: (int index) {
-          setState(() {
-            _tabIndex = index;
-          });
-        },
-      ),
+    return PageView(
+      physics: const ClampingScrollPhysics(),
+      controller: _controller,
+      children: <Widget>[
+        SelfPage(controller: _controller),
+        MainContentPage(controller: _controller),
+      ],
     );
   }
 }

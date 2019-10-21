@@ -4,11 +4,11 @@ import 'package:github/server.dart' as GitHub;
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import 'package:gitav/constants/resource.dart';
-import 'package:gitav/providers/notications_provider.dart';
+import 'package:gitcandies/providers/notications_provider.dart';
+import 'package:gitcandies/widgets/avatar.dart';
+
 
 class NotificationsPage extends StatelessWidget {
-  final double _avatarSize = 30.0;
 
   String timeHandler(DateTime time) {
     final now = DateTime.now();
@@ -29,20 +29,6 @@ class NotificationsPage extends StatelessWidget {
     return time.toString();
   }
 
-  Widget avatar(String avatarUrl) => ClipRRect(
-    borderRadius: BorderRadius.circular(_avatarSize),
-    child: FadeInImage(
-      fadeInDuration: const Duration(milliseconds: 100),
-      placeholder: AssetImage(
-        R.ASSETS_GITHUB_OCTOCAT_OCTOCAT_JPG,
-      ),
-      image: NetworkImage(avatarUrl),
-      width: _avatarSize,
-      height: _avatarSize,
-      fit: BoxFit.cover,
-    ),
-  );
-
   Widget notification(
       context, GitHub.Repository repo, List<GitHub.Notification> ns) {
     return Card(
@@ -56,7 +42,9 @@ class NotificationsPage extends StatelessWidget {
               padding: const EdgeInsets.all(10.0),
               child: Row(
                 children: <Widget>[
-                  avatar(repo.owner.avatarUrl),
+                  UserAvatar(
+                    url: repo.owner.avatarUrl,
+                  ),
                   SizedBox(width: 12.0),
                   Expanded(
                     child: Text(
@@ -132,22 +120,20 @@ class NotificationsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<NotificationsProvider>(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: Image.asset(R.ASSETS_GITHUB_LOGOS_LOGO_WHITE_PNG, height: 40.0),
-      ),
-      body: Center(
-        child: RefreshIndicator(
-          onRefresh: () async {
-            await provider.getNotifications(refresh: true, all: true);
+    return Center(
+        child: Consumer<NotificationsProvider>(
+          builder: (context, provider, _) {
+            return RefreshIndicator(
+              onRefresh: () async {
+                await provider.getNotifications(refresh: true, all: true);
+              },
+              child: FutureBuilder(
+                future: provider.getNotifications(all: true),
+                builder: (_, __) => repoFields(provider),
+              ),
+            );
           },
-          child: FutureBuilder(
-            future: provider.getNotifications(all: true),
-            builder: (_, __) => repoFields(provider),
-          ),
         ),
-      ),
-    );
+      );
   }
 }

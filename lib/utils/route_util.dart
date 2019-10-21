@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:gitav/constants/constants.dart';
-import 'package:gitav/pages/login_page.dart';
+import 'package:gitcandies/constants/constants.dart';
+import 'package:gitcandies/pages/login_page.dart';
 
 
 class RouteUtils {

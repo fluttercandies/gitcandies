@@ -12,4 +12,5 @@ class SpUtils {
   static String get token => sp.getString(spToken);
   static Future<void> setToken(String value) async =>
       await sp.setString(spToken, value);
+  static Future<void> removeToken() async => await sp.remove(spToken);
 }
