@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:gitcandies/constants/screens.dart';
 import 'package:provider/provider.dart';
 
 import 'package:gitcandies/constants/resource.dart';
@@ -47,12 +48,11 @@ class _SplashPageState extends State<SplashPage>{
     decoration: BoxDecoration(
       color: Theme.of(context).primaryColor,
     ),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Image.asset(R.ASSETS_GITHUB_OCTOCAT_OCTOCAT_PNG),
-        Image.asset(R.ASSETS_GITHUB_LOGOS_LOGO_WHITE_PNG),
-      ],
+    child: Center(
+      child: Image.asset(
+        R.ASSETS_LOGO_FRONT_PNG,
+        width: Screen.width / 2,
+      ),
     ),
   );
 

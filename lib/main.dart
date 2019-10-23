@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gitcandies/providers/themes_provider.dart';
+import 'package:gitcandies/utils/color_utils.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
 
@@ -18,19 +20,30 @@ void main() async {
 class GitApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return OKToast(
-      child: MultiProvider(
-        providers: providers,
-        child: ScrollConfiguration(
-          behavior: NoGlowScrollBehavior(),
-          child: MaterialApp(
-            navigatorKey: Constants.navigatorKey,
-            title: 'Flutter Demo',
-            theme: gitcandiesTheme,
-            routes: RouteUtils.routes,
-            home: SplashPage(),
-          ),
-        ),
+    Color _themeColor;
+    return MultiProvider(
+      providers: providers,
+      child: Consumer<ThemesProvider>(
+        builder: (context, provider, _) {
+          String colorKey = provider.themeColor;
+          if (themeColorMap[colorKey] != null) {
+            _themeColor = themeColorMap[colorKey];
+          }
+          return OKToast(
+            child: ScrollConfiguration(
+              behavior: NoGlowScrollBehavior(),
+              child: MaterialApp(
+                navigatorKey: Constants.navigatorKey,
+                title: 'Git Candies',
+                theme: ThemeData(
+                  primarySwatch: ColorUtils.swatchFor(_themeColor),
+                ),
+                routes: RouteUtils.routes,
+                home: SplashPage(),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

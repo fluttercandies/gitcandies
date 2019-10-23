@@ -113,12 +113,11 @@ class _LoginPageState extends State<LoginPage> {
     left: 0.0,
     right: 0.0,
     height: 180.0,
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Image.asset(R.ASSETS_GITHUB_OCTOCAT_OCTOCAT_PNG, height: 50.0),
-        Image.asset(R.ASSETS_GITHUB_LOGOS_LOGO_WHITE_PNG, height: 50.0),
-      ],
+    child: Center(
+      child: Image.asset(
+          R.ASSETS_CANDIES_LOGO_LOGO_WHITE_PNG,
+          height: 180 - kToolbarHeight,
+      ),
     ),
   );
 

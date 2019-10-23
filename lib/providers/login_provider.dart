@@ -24,7 +24,11 @@ class LoginProvider extends BaseProvider {
       _onLoginSuccess(client, user, token);
     } catch (e) {
       print(e);
-      showToast("Login fail");
+      if (e is AccessForbidden) {
+        route.popAndPushNamed("/login");
+      } else {
+        showToast("Login fail");
+      }
     }
   }
 
@@ -46,6 +50,7 @@ class LoginProvider extends BaseProvider {
         scopes.gist,
         scopes.repositories,
         scopes.notifications,
+        scopes.organizationsRead,
         scopes.organizationsAdministration,
       ],
       "note": "admin_script",

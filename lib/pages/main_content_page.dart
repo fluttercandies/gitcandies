@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gitcandies/pages/user_page.dart';
+import 'package:gitcandies/pages/activites_page.dart';
 import 'package:provider/provider.dart';
 
 import 'package:gitcandies/constants/resource.dart';
 import 'package:gitcandies/pages/notifications_page.dart';
-import 'package:gitcandies/providers/login_provider.dart';
 import 'package:gitcandies/providers/user_provider.dart';
 import 'package:gitcandies/widgets/avatar.dart';
 
@@ -18,25 +17,22 @@ class MainContentPage extends StatefulWidget {
 }
 
 class _MainContentPageState extends State<MainContentPage> with AutomaticKeepAliveClientMixin {
-  final icons = [Icons.notifications, Icons.add, Icons.account_circle];
-  final titles = ["Notifications", "测试1", "Mine"];
-
-  List<Widget> pages = <Widget>[
-    NotificationsPage(),
-    SizedBox(),
-    UserPage(),
-    Center(
-      child: Consumer<LoginProvider>(
-        builder: (context, provider, _) {
-          return IconButton(
-            icon: Icon(Icons.exit_to_app),
-            onPressed: () {
-              provider.logout();
-            },
-          );
-        },
-      ),
-    ),
+  final pages = [
+    {
+      "name": "Events",
+      "icon": Icons.event,
+      "page": ActivitiesPage()
+    },
+    {
+      "name": "Notifications",
+      "icon": Icons.notifications,
+      "page": NotificationsPage()
+    },
+    {
+      "name": "Test",
+      "icon": Icons.add,
+      "page": SizedBox(),
+    },
   ];
 
   int _tabIndex = 0;
@@ -57,7 +53,7 @@ class _MainContentPageState extends State<MainContentPage> with AutomaticKeepAli
     super.build(context);
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset(R.ASSETS_GITHUB_LOGOS_LOGO_WHITE_PNG, height: 40.0),
+        title: Image.asset(R.ASSETS_CANDIES_LOGO_LOGO_WHITE_PNG, height: kToolbarHeight),
         centerTitle: true,
         leading: Consumer<UserProvider>(
           builder: (context, provider, _) => UserAvatar(
@@ -68,15 +64,15 @@ class _MainContentPageState extends State<MainContentPage> with AutomaticKeepAli
         ),
       ),
       body: IndexedStack(
-        children: pages,
-        index: _tabIndex,
+        children: pages.map<Widget>((page) => page['page']).toList(),
+        index: _tabIndex
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
-          for (int i = 0; i < titles.length; i++)
+          for (int i = 0; i < pages.length; i++)
             BottomNavigationBarItem(
-              icon: Icon(icons[i]),
-              title: Text(titles[i]),
+              icon: Icon(pages[i]['icon']),
+              title: Text(pages[i]['name']),
             ),
         ],
         currentIndex: _tabIndex,

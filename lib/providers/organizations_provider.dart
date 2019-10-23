@@ -12,7 +12,7 @@ class OrganizationsProvider extends BaseProvider {
   Future<void> getOrganizations({bool refresh = false, int page}) async {
     if (!loaded || refresh) {
       debugPrint("Getting organizations...");
-      var os = await _organizations.list("alexvincent525").toList();
+      var os = await _organizations.list().toList();
       if (refresh) {
         organizations.clear();
       }

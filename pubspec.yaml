@@ -1,7 +1,7 @@
 name: gitcandies
 description: A GitHub Flutter application.
 
-version: 0.1.0+8
+version: 0.1.0+9
 
 environment:
   sdk: ">=2.5.0 <3.0.0"
@@ -12,9 +12,12 @@ dependencies:
     sdk: flutter
 
   flutter_svg: 0.14.2
-  github: 5.4.0
+#  github: 5.4.0
+  github:
+    git: https://github.com/AlexVincent525/github.dart.git
   intl: 0.15.8
   provider: 3.1.0+1
+  pull_to_refresh_notification: 0.3.2
   shared_preferences: 0.5.3+4
   oktoast: 2.2.0
 
@@ -28,6 +31,8 @@ flutter:
 
   assets:
     - assets/
+    - assets/candies/
+    - assets/candies/logo/
     - assets/github/logos/
     - assets/github/mark/
     - assets/github/octocat/
