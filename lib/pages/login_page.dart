@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget get cover => AnimatedPositioned(
-        duration: const Duration(seconds: 1),
+        duration: const Duration(seconds: 2),
         top: covered ? 0.0 : -Screen.height,
         curve: Curves.easeIn,
         width: Screen.width,
@@ -63,12 +63,11 @@ class _LoginPageState extends State<LoginPage> {
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Image.asset(R.ASSETS_GITHUB_OCTOCAT_OCTOCAT_PNG),
-              Image.asset(R.ASSETS_GITHUB_LOGOS_LOGO_WHITE_PNG),
-            ],
+          child: Center(
+            child: Image.asset(
+              R.ASSETS_LOGO_FRONT_PNG,
+              width: Screen.width / 2,
+            ),
           ),
         ),
       );

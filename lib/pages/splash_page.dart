@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 
 import 'package:gitcandies/constants/constants.dart';
 import 'package:gitcandies/pages/login_page.dart';
@@ -31,8 +30,18 @@ class _SplashPageState extends State<SplashPage> {
       if (SpUtils.hasToken) {
         Provider.of<LoginProvider>(context).loginWithToken(SpUtils.token);
       } else {
-        RouteHelper().pushWidget(
-          LoginPage(pushFromSplash: true),
+        RouteHelper().pushRoute(
+          PageRouteBuilder(
+            transitionDuration: Duration.zero,
+            pageBuilder: (
+                BuildContext context,
+                Animation animation,
+                Animation secondaryAnimation
+                ) => FadeTransition(
+              opacity: animation,
+              child: LoginPage(),
+            ),
+          ),
           replaceRoot: true,
         );
       }
@@ -54,11 +63,6 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion(
-      value: SystemUiOverlayStyle.light,
-      child: Scaffold(
-        body: cover,
-      ),
-    );
+    return cover;
   }
 }

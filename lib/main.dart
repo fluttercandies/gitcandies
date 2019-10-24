@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 
@@ -8,7 +10,16 @@ import 'package:gitcandies/utils/utils.dart';
 
 void main() async {
   await SpUtils.initInstance();
-  runApp(GitApp());
+  if (ui.window.physicalSize.isEmpty) {
+    ui.window.onMetricsChanged = () {
+      if (!ui.window.physicalSize.isEmpty) {
+        ui.window.onMetricsChanged = null;
+        runApp(GitApp());
+      }
+    };
+  } else {
+    runApp(GitApp());
+  }
 }
 
 class GitApp extends StatelessWidget {
