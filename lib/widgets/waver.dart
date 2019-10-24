@@ -3,7 +3,6 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math.dart' as Vector;
 
-
 class Waver extends StatefulWidget {
   final Size size;
   final int xOffset;
@@ -35,19 +34,24 @@ class _WaverState extends State<Waver> with TickerProviderStateMixin {
   @override
   void initState() {
     animationController = AnimationController(
-      vsync: this, duration: widget.duration ?? const Duration(seconds: 10),
+      vsync: this,
+      duration: widget.duration ?? const Duration(seconds: 10),
     );
 
     animationController.addListener(() {
       animationList.clear();
-      for (int i = -2 - widget.xOffset; i <= widget.size.width.toInt() + 2; i++) {
+      for (int i = -2 - widget.xOffset;
+          i <= widget.size.width.toInt() + 2;
+          i++) {
         animationList.add(Offset(
             i.toDouble() + widget.xOffset,
-            widget.size.height + math.sin(
-                (animationController.value * 360 - i) %
-                    360 * Vector.degrees2Radians
-            ) * 20 - 30 - widget.yOffset
-        ));
+            widget.size.height +
+                math.sin((animationController.value * 360 - i) %
+                        360 *
+                        Vector.degrees2Radians) *
+                    20 -
+                30 -
+                widget.yOffset));
       }
     });
     animationController.repeat();
@@ -79,14 +83,14 @@ class _WaverState extends State<Waver> with TickerProviderStateMixin {
         ),
       ),
     );
-    if (widget.opacity != null) waver = Opacity(
-      opacity: widget.opacity,
-      child: waver,
-    );
+    if (widget.opacity != null)
+      waver = Opacity(
+        opacity: widget.opacity,
+        child: waver,
+      );
     return waver;
   }
 }
-
 
 class WaveClipper extends CustomClipper<Path> {
   final double animation;
@@ -107,5 +111,6 @@ class WaveClipper extends CustomClipper<Path> {
   }
 
   @override
-  bool shouldReclip(WaveClipper oldClipper) => animation != oldClipper.animation;
+  bool shouldReclip(WaveClipper oldClipper) =>
+      animation != oldClipper.animation;
 }

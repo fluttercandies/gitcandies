@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:gitcandies/constants/resource.dart';
 
-
 class UserAvatar extends StatelessWidget {
   final String url;
   final double size;

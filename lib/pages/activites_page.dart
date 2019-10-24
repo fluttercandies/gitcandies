@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import 'package:gitcandies/providers/activities_provider.dart';
-import 'package:gitcandies/widgets/candies_refresh_list.dart';
-import 'package:gitcandies/widgets/loading_indicator.dart';
-
+import 'package:gitcandies/constants/constants.dart';
+import 'package:gitcandies/providers/providers.dart';
 
 class ActivitiesPage extends StatelessWidget {
-
   Widget repoFields(ActivitiesProvider provider) {
     if (!provider.loaded)
       return Center(
@@ -27,7 +23,7 @@ class ActivitiesPage extends StatelessWidget {
     final events = provider.activities;
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
+        (BuildContext context, int index) {
           return Container();
         },
         childCount: events.length,

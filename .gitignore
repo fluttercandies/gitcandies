@@ -35,6 +35,7 @@
 **/android/captures/
 **/android/gradlew
 **/android/gradlew.bat
+**/android/key.properties
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
 
@@ -72,4 +73,5 @@
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 
-lib/configs/oauth_config.dart
+# Project level ignore.
+**/lib/configs/oauth_config.dart

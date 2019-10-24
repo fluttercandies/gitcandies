@@ -4,12 +4,11 @@ import 'package:github/server.dart';
 import 'package:oktoast/oktoast.dart';
 
 import 'package:gitcandies/configs/oauth_config.dart';
-import 'package:gitcandies/constants/apis.dart';
+import 'package:gitcandies/constants/constants.dart';
 import 'package:gitcandies/pages/login_page.dart';
 import 'package:gitcandies/pages/main_page.dart';
-import 'package:gitcandies/providers/base_provider.dart';
-import 'package:gitcandies/providers/user_provider.dart';
-import 'package:gitcandies/utils/shared_preferences_utils.dart';
+import 'package:gitcandies/providers/providers.dart';
+import 'package:gitcandies/utils/utils.dart';
 
 class LoginProvider extends BaseProvider {
   Future<void> loginWithToken(String token) async {

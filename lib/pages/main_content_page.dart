@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gitcandies/pages/activites_page.dart';
-import 'package:provider/provider.dart';
 
-import 'package:gitcandies/constants/resource.dart';
+import 'package:gitcandies/constants/constants.dart';
 import 'package:gitcandies/pages/notifications_page.dart';
-import 'package:gitcandies/providers/user_provider.dart';
-import 'package:gitcandies/widgets/avatar.dart';
+import 'package:gitcandies/providers/providers.dart';
 
 class MainContentPage extends StatefulWidget {
   final PageController controller;
@@ -16,13 +14,10 @@ class MainContentPage extends StatefulWidget {
   _MainContentPageState createState() => _MainContentPageState();
 }
 
-class _MainContentPageState extends State<MainContentPage> with AutomaticKeepAliveClientMixin {
+class _MainContentPageState extends State<MainContentPage>
+    with AutomaticKeepAliveClientMixin {
   final pages = [
-    {
-      "name": "Events",
-      "icon": Icons.event,
-      "page": ActivitiesPage()
-    },
+    {"name": "Events", "icon": Icons.event, "page": ActivitiesPage()},
     {
       "name": "Notifications",
       "icon": Icons.notifications,
@@ -53,7 +48,8 @@ class _MainContentPageState extends State<MainContentPage> with AutomaticKeepAli
     super.build(context);
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset(R.ASSETS_CANDIES_LOGO_LOGO_WHITE_PNG, height: kToolbarHeight),
+        title: Image.asset(R.ASSETS_CANDIES_LOGO_LOGO_WHITE_PNG,
+            height: kToolbarHeight),
         centerTitle: true,
         leading: Consumer<UserProvider>(
           builder: (context, provider, _) => UserAvatar(
@@ -64,9 +60,8 @@ class _MainContentPageState extends State<MainContentPage> with AutomaticKeepAli
         ),
       ),
       body: IndexedStack(
-        children: pages.map<Widget>((page) => page['page']).toList(),
-        index: _tabIndex
-      ),
+          children: pages.map<Widget>((page) => page['page']).toList(),
+          index: _tabIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           for (int i = 0; i < pages.length; i++)

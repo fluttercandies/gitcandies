@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:gitcandies/constants/constants.dart';
 import 'package:gitcandies/pages/login_page.dart';
 
-
 class RouteUtils {
   static Map<String, WidgetBuilder> get routes => {
-    "/login": (_) => LoginPage(),
-  };
+        "/login": (_) => LoginPage(),
+      };
 }
 
 class FadePageTransitionsBuilder extends PageTransitionsBuilder {

@@ -1,15 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:gitcandies/constants/constants.dart';
 import 'package:github/server.dart' as GitHub;
-import 'package:provider/provider.dart';
 
-import 'package:gitcandies/providers/notications_provider.dart';
-import 'package:gitcandies/widgets/avatar.dart';
-import 'package:gitcandies/widgets/candies_refresh_list.dart';
-import 'package:gitcandies/widgets/loading_indicator.dart';
-
+import 'package:gitcandies/constants/constants.dart';
+import 'package:gitcandies/providers/providers.dart';
 
 class NotificationsPage extends StatelessWidget {
   Widget _repoName(GitHub.Repository repo) {

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:gitcandies/pages/main_content_page.dart';
 import 'package:gitcandies/pages/self_page.dart';
 
-
 class MainPage extends StatefulWidget {
   @override
   _MainPageState createState() => _MainPageState();

@@ -18,6 +18,7 @@ class Scopes {
   final organizationsAdministration = "admin:org";
   final organizationsWrite = "write:org";
   final organizationsRead = "read:org";
+
   /// Note: [admin:org_hook] will only take effect on those hooks created by
   /// your OAuth app.
   final organizationsHooksAdministration = "admin:org_hook";

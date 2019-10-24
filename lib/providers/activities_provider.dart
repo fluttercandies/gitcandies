@@ -1,9 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:github/server.dart';
 
-import 'package:gitcandies/providers/base_provider.dart';
-import 'package:gitcandies/providers/user_provider.dart';
-
+import 'package:gitcandies/providers/providers.dart';
 
 class ActivitiesProvider extends BaseProvider {
   ActivityService get service => github.activity;
@@ -14,8 +12,10 @@ class ActivitiesProvider extends BaseProvider {
     if (!loaded || refresh) {
       debugPrint("Getting activities...");
       final userProvider = getProvider<UserProvider>();
-      service.pollEventsReceivedByUser(userProvider
-          .currentUser.login).start().listen((event) {
+      service
+          .pollEventsReceivedByUser(userProvider.currentUser.login)
+          .start()
+          .listen((event) {
         activities.add(event);
       }).onDone(() {
         loaded = true;
