@@ -1,20 +1,25 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
-import 'package:gitcandies/providers/themes_provider.dart';
-import 'package:gitcandies/utils/color_utils.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:provider/provider.dart';
 
 import 'package:gitcandies/constants/constants.dart';
-import 'package:gitcandies/constants/themes.dart';
 import 'package:gitcandies/pages/splash_page.dart';
 import 'package:gitcandies/providers/providers.dart';
-import 'package:gitcandies/utils/route_util.dart';
-import 'package:gitcandies/utils/shared_preferences_utils.dart';
-
+import 'package:gitcandies/utils/utils.dart';
 
 void main() async {
   await SpUtils.initInstance();
-  runApp(GitApp());
+  if (ui.window.physicalSize.isEmpty) {
+    ui.window.onMetricsChanged = () {
+      if (!ui.window.physicalSize.isEmpty) {
+        ui.window.onMetricsChanged = null;
+        runApp(GitApp());
+      }
+    };
+  } else {
+    runApp(GitApp());
+  }
 }
 
 class GitApp extends StatelessWidget {
@@ -23,16 +28,16 @@ class GitApp extends StatelessWidget {
     Color _themeColor;
     return MultiProvider(
       providers: providers,
-      child: Consumer<ThemesProvider>(
-        builder: (context, provider, _) {
-          String colorKey = provider.themeColor;
-          if (themeColorMap[colorKey] != null) {
-            _themeColor = themeColorMap[colorKey];
-          }
-          return OKToast(
-            child: ScrollConfiguration(
-              behavior: NoGlowScrollBehavior(),
-              child: MaterialApp(
+      child: OKToast(
+        child: ScrollConfiguration(
+          behavior: NoGlowScrollBehavior(),
+          child: Consumer<ThemesProvider>(
+            builder: (context, provider, _) {
+              String colorKey = provider.themeColor;
+              if (themeColorMap[colorKey] != null) {
+                _themeColor = themeColorMap[colorKey];
+              }
+              return MaterialApp(
                 navigatorKey: Constants.navigatorKey,
                 title: 'Git Candies',
                 theme: ThemeData(
@@ -40,10 +45,10 @@ class GitApp extends StatelessWidget {
                 ),
                 routes: RouteUtils.routes,
                 home: SplashPage(),
-              ),
-            ),
-          );
-        },
+              );
+            },
+          ),
+        ),
       ),
     );
   }

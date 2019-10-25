@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:github/server.dart';
 
-import 'package:gitcandies/providers/base_provider.dart';
+import 'package:gitcandies/providers/providers.dart';
 
 class NotificationsProvider extends BaseProvider {
   ActivityService get activities => github.activity;
@@ -9,7 +9,8 @@ class NotificationsProvider extends BaseProvider {
   bool loaded = false;
   Map<String, List<Notification>> notifications = {};
   Set<Repository> repos = {};
-  Future<void> getNotifications({bool refresh = false, bool all = false}) async {
+  Future<void> getNotifications(
+      {bool refresh = false, bool all = false}) async {
     if (!loaded || refresh) {
       debugPrint("Getting notifications...");
       var ns = await activities.listNotifications(all: all).toList();

@@ -1,10 +1,10 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:gitcandies/constants/resource.dart';
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart'
-    as pTRN;
+as pTRN;
 
+import 'package:gitcandies/constants/constants.dart';
 
 class CandiesRefreshList extends StatelessWidget {
   final pTRN.RefreshCallback onRefresh;
@@ -57,7 +57,6 @@ class CandiesRefreshList extends StatelessWidget {
     );
   }
 }
-
 
 class RefreshLogo extends StatefulWidget {
   final double offset;

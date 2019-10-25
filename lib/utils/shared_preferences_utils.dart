@@ -2,6 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SpUtils {
   static final String spToken = "token";
+  static final String spTheme = "theme";
   static SharedPreferences sp;
 
   static Future<void> initInstance() async {
@@ -13,4 +14,8 @@ class SpUtils {
   static Future<void> setToken(String value) async =>
       await sp.setString(spToken, value);
   static Future<void> removeToken() async => await sp.remove(spToken);
+
+  static String get theme => sp.getString(spTheme);
+  static Future<void> setTheme(String value) async =>
+      await sp.setString(spTheme, value);
 }

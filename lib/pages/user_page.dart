@@ -5,12 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:github/server.dart' as GitHub;
-import 'package:provider/provider.dart';
 
-import 'package:gitcandies/constants/apis.dart';
-import 'package:gitcandies/providers/organizations_provider.dart';
-import 'package:gitcandies/providers/user_provider.dart';
-import 'package:gitcandies/widgets/avatar.dart';
+import 'package:gitcandies/constants/constants.dart';
+import 'package:gitcandies/providers/providers.dart';
 
 class UserPage extends StatefulWidget {
   final GitHub.User user;
@@ -50,40 +47,40 @@ class _UserPageState extends State<UserPage> {
   }
 
   Widget wBio(GitHub.CurrentUser user, TextStyle style) => Padding(
-    padding: const EdgeInsets.only(bottom: 10.0),
-    child: Text(user.bio, style: style, maxLines: 1),
-  );
+        padding: const EdgeInsets.only(bottom: 10.0),
+        child: Text(user.bio, style: style, maxLines: 1),
+      );
 
   Widget wOrganizations(TextStyle style) => Consumer<OrganizationsProvider>(
-    builder: (context, provider, _) {
-      if (provider.organizations.isEmpty) {
-        return SizedBox();
-      }
-      return SizedBox(
-        height: 40.0,
-        child: Row(
-          children: <Widget>[
-            Text("Belongs: ", style: style),
-            Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: provider.organizations.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                    child: UserAvatar(
-                      url: provider.organizations[index].avatarUrl,
-                    ),
-                  );
-                },
-              ),
+        builder: (context, provider, _) {
+          if (provider.organizations.isEmpty) {
+            return SizedBox();
+          }
+          return SizedBox(
+            height: 40.0,
+            child: Row(
+              children: <Widget>[
+                Text("Belongs: ", style: style),
+                Expanded(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: provider.organizations.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                        child: UserAvatar(
+                          url: provider.organizations[index].avatarUrl,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       );
-    },
-  );
 
   Widget userInfo(context) {
     GitHub.User _user =
@@ -170,7 +167,8 @@ class _UserPageState extends State<UserPage> {
         ),
         child: Container(
           color: Theme.of(context).primaryColor,
-          padding: const EdgeInsets.fromLTRB(16.0, 16.0 + kToolbarHeight, 16.0, 16.0),
+          padding: const EdgeInsets.fromLTRB(
+              16.0, 16.0 + kToolbarHeight, 16.0, 16.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -211,17 +209,17 @@ class _UserPageState extends State<UserPage> {
   }
 
   Widget wContribution(user) => Card(
-    child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: SvgPicture.network(
-          API.graphicUrl(user.login),
-          height: 80.0,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: SvgPicture.network(
+              API.graphicUrl(user.login),
+              height: 80.0,
+            ),
+          ),
         ),
-      ),
-    ),
-  );
+      );
 
   Widget wTabs(GitHub.CurrentUser user) {
     final tabs = {
@@ -237,10 +235,9 @@ class _UserPageState extends State<UserPage> {
         height: kToolbarHeight,
         decoration: BoxDecoration(
           border: Border(
-            top: BorderSide(
-              color: Colors.grey[800],
-            )
-          ),
+              top: BorderSide(
+            color: Colors.grey[800],
+          )),
           color: Theme.of(context).primaryColor,
         ),
         child: Row(
@@ -249,14 +246,16 @@ class _UserPageState extends State<UserPage> {
             for (int i = 0; i < 2 * tabs.length - 1; i++)
               i.isEven
                   ? Expanded(
-                child: Center(
-                  child: Text(
-                    tabs.keys.elementAt(i ~/ 2),
-                    style: Theme.of(context).textTheme.body1
-                        .copyWith(color: Colors.white),
-                  ),
-                ),
-              )
+                      child: Center(
+                        child: Text(
+                          tabs.keys.elementAt(i ~/ 2),
+                          style: Theme.of(context)
+                              .textTheme
+                              .body1
+                              .copyWith(color: Colors.white),
+                        ),
+                      ),
+                    )
                   : VerticalDivider(color: Colors.grey[700]),
           ],
         ),
@@ -279,17 +278,17 @@ class _UserPageState extends State<UserPage> {
             SliverAppBar(
               title: showTitle
                   ? Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  UserAvatar(url: user.avatarUrl),
-                  SizedBox(width: 6.0),
-                  Text(user.name ?? user.login),
-                ],
-              )
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        UserAvatar(url: user.avatarUrl),
+                        SizedBox(width: 6.0),
+                        Text(user.name ?? user.login),
+                      ],
+                    )
                   : null,
               flexibleSpace: FlexibleSpaceBar(background: userInfo(context)),
               expandedHeight: kToolbarHeight +
-              (organizationsProvider.organizations.isEmpty ? 168 : 208) +
+                  (organizationsProvider.organizations.isEmpty ? 168 : 208) +
                   kToolbarHeight,
               bottom: wTabs(user),
               primary: true,

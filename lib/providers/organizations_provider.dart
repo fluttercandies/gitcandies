@@ -1,8 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:github/server.dart';
 
-import 'package:gitcandies/providers/base_provider.dart';
-
+import 'package:gitcandies/providers/providers.dart';
 
 class OrganizationsProvider extends BaseProvider {
   OrganizationsService get _organizations => github.organizations;
