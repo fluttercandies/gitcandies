@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 
 import 'package:gitcandies/constants/constants.dart';
 import 'package:gitcandies/providers/providers.dart';
@@ -19,7 +18,7 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   bool covered = false;
   bool obscured = true;
   String _username, _password;
@@ -37,9 +36,20 @@ class _LoginPageState extends State<LoginPage> {
         forceStrutHeight: true,
       );
 
+  Animation<double> candieAnimation;
+  AnimationController candieAnimationController;
+
   @override
   void initState() {
     if (widget.pushFromSplash) covered = true;
+
+    candieAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+    candieAnimation =
+        Tween(begin: 0.0, end: 1.0).animate(candieAnimationController);
+
     SchedulerBinding.instance.addPostFrameCallback((_) {
       if (covered)
         setState(() {
@@ -51,6 +61,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void dispose() {
+    candieAnimationController..stop()..reset()..dispose();
     super.dispose();
   }
 
@@ -191,7 +202,7 @@ class _LoginPageState extends State<LoginPage> {
             prefixIcon: Icon(Icons.lock),
             suffixIcon: IconButton(
               icon: Icon(
-                obscured ? Icons.visibility : Icons.visibility_off,
+                obscured ? Icons.visibility_off : Icons.visibility,
                 color: obscured ? Colors.grey[500] : Colors.black,
               ),
               onPressed: () {
@@ -210,49 +221,77 @@ class _LoginPageState extends State<LoginPage> {
         ),
       );
 
-  Widget get loginButton => Container(
-        margin: EdgeInsets.only(
-          top: buttonHeight / 2,
-        ),
-        height: buttonHeight,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(buttonHeight / 2),
-          child: FlatButton(
-            splashColor: Colors.grey[700],
-            color: Theme.of(context).primaryColor,
-            child: Center(
-              child: Text(
-                "Login",
-                style: Theme.of(context).textTheme.title.copyWith(
-                      color: Colors.white,
-                    ),
+  Widget get loginButton => Consumer<LoginProvider>(
+        builder: (context, provider, _) {
+          return AnimatedContainer(
+            duration: kTabScrollDuration,
+            margin: EdgeInsets.only(
+              top: buttonHeight / 2,
+            ),
+            height: buttonHeight,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(buttonHeight / 2),
+              child: FlatButton(
+                splashColor: Colors.grey[700],
+                color: Theme.of(context).primaryColor,
+                child: Center(
+                  child: AnimatedCrossFade(
+                      firstChild: Text(
+                        "Login",
+                        style: Theme.of(context).textTheme.title.copyWith(
+                          color: Colors.white,
+                        ),
+                      ),
+                      secondChild: candie,
+                      crossFadeState: !provider.logging ? CrossFadeState
+                          .showFirst : CrossFadeState.showSecond,
+                      duration: kTabScrollDuration,
+                  ),
+                ),
+                onPressed: () async {
+                  if (!provider.logging) {
+                    provider.loginWithBasic(_username, _password);
+                  }
+                },
               ),
             ),
-            onPressed: () async {
-              var loginProvider = Provider.of<LoginProvider>(context);
-              loginProvider.loginWithBasic(
-                _username,
-                _password,
-              );
-            },
-          ),
-        ),
+          );
+        },
       );
+
+  Future _loginAnimation(bool start) async {
+    if (start && !candieAnimationController.isAnimating) {
+      try {
+        await candieAnimationController.repeat().orCancel;
+      } on TickerCanceled {}
+    } else if (!start) {
+      candieAnimationController
+        ..stop()
+        ..reset();
+    }
+  }
+
+  Widget get candie => RotationTransition(
+        turns: candieAnimation,
+    child: Image.asset(R.ASSETS_CANDIES_CANDIES_PNG, width: 40.0),
+  );
 
   @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion(
-      value: SystemUiOverlayStyle.light,
-      child: Scaffold(
-        body: Stack(
-          children: <Widget>[
-            waver,
-            header,
-            content,
-            cover,
-          ],
-        ),
-      ),
+    return Consumer<LoginProvider>(
+      builder: (context, provider, _) {
+        _loginAnimation(provider.logging);
+        return Scaffold(
+          body: Stack(
+            children: <Widget>[
+              waver,
+              header,
+              content,
+              cover,
+            ],
+          ),
+        );
+      },
     );
   }
 }

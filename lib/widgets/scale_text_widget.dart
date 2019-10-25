@@ -31,8 +31,8 @@ class MaxScaleTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var data = MediaQuery.of(context);
-    var scale = math.min(max, data.textScaleFactor);
+    MediaQueryData data = MediaQuery.of(context);
+    double scale = math.min(max, data.textScaleFactor);
     return MediaQuery(
       data: data.copyWith(textScaleFactor: scale),
       child: child,
@@ -53,8 +53,8 @@ class ScaleTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var data = MediaQuery.of(context);
-    var scale = this.scale ?? data.textScaleFactor;
+    MediaQueryData data = MediaQuery.of(context);
+    double scale = this.scale ?? data.textScaleFactor;
     return MediaQuery(
       data: data.copyWith(textScaleFactor: scale),
       child: child,

@@ -7,11 +7,12 @@ import 'package:oktoast/oktoast.dart';
 import 'package:gitcandies/configs/oauth_config.dart';
 import 'package:gitcandies/constants/constants.dart';
 import 'package:gitcandies/pages/login_page.dart';
-import 'package:gitcandies/pages/main/main_page.dart';
 import 'package:gitcandies/providers/providers.dart';
 import 'package:gitcandies/utils/utils.dart';
 
 class LoginProvider extends BaseProvider {
+  bool logging = false;
+
   void checkLogin() {
     if (SpUtils.hasToken) {
       loginWithToken(SpUtils.token);
@@ -43,8 +44,13 @@ class LoginProvider extends BaseProvider {
       _onLoginSuccess(client, user, token);
     } catch (e) {
       print(e);
+
+      logging = false;
+      notifyListeners();
+
       if (e is AccessForbidden) {
-        route.popAndPushNamed("/login");
+        route.router
+            .pushNamedAndRemoveUntil("/loginpage", (Route route) => false);
       } else {
         showToast("Login fail");
       }
@@ -56,6 +62,9 @@ class LoginProvider extends BaseProvider {
         !checkInputEmpty(password, makeEmptyTip("password"))) {
       return;
     }
+
+    logging = true;
+    notifyListeners();
 
     final bytes = utf8.encode("$username:$password");
     final baseStr = base64.encode(bytes);
@@ -69,7 +78,6 @@ class LoginProvider extends BaseProvider {
         scopes.gist,
         scopes.repositories,
         scopes.notifications,
-        scopes.organizationsRead,
         scopes.organizationsAdministration,
       ],
       "note": "admin_script",
@@ -86,28 +94,24 @@ class LoginProvider extends BaseProvider {
     loginWithToken(token);
   }
 
-  _onLoginSuccess(GitHub client, CurrentUser user, String token) async {
+  void _onLoginSuccess(GitHub client, CurrentUser user, String token) async {
     await SpUtils.setToken(token);
     github = client;
     final userProvider = getProvider<UserProvider>();
     userProvider.currentUser = user;
 
-    route.pushWidget(
-      MainPage(),
-      replaceRoot: true,
-    );
+    logging = false;
+
+    route.router.pushNamedAndRemoveUntil("/mainpage", (Route route) => false);
   }
 
-  logout() async {
+  void logout() async {
     showToast("See you next time :>");
     github = null;
     final userProvider = getProvider<UserProvider>();
     userProvider.currentUser = null;
     await SpUtils.removeToken();
 
-    route.pushWidget(
-      LoginPage(),
-      replaceRoot: true,
-    );
+    route.router.pushNamedAndRemoveUntil("/loginpage", (Route route) => false);
   }
 }
