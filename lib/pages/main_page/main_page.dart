@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:gitcandies/pages/main_content_page.dart';
+import 'package:gitcandies/pages/main_page/main_content_page.dart';
 import 'package:gitcandies/pages/self_page.dart';
 
+import 'package:ff_annotation_route/ff_annotation_route.dart';
+
+@FFRoute(name: "/mainpage", routeName: "首页")
 class MainPage extends StatefulWidget {
   @override
   _MainPageState createState() => _MainPageState();

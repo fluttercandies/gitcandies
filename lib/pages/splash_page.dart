@@ -33,11 +33,9 @@ class _SplashPageState extends State<SplashPage> {
         RouteHelper().pushRoute(
           PageRouteBuilder(
             transitionDuration: Duration.zero,
-            pageBuilder: (
-                BuildContext context,
-                Animation animation,
-                Animation secondaryAnimation
-                ) => FadeTransition(
+            pageBuilder: (BuildContext context, Animation animation,
+                    Animation secondaryAnimation) =>
+                FadeTransition(
               opacity: animation,
               child: LoginPage(),
             ),
