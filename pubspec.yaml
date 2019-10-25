@@ -20,11 +20,12 @@ dependencies:
   pull_to_refresh_notification: 0.3.2
   shared_preferences: 0.5.3+4
   oktoast: ^2.2.0
+  flutter_screenutil: ^0.6.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  ff_annotation_route: ^1.1.0
 
 flutter:
   uses-material-design: true

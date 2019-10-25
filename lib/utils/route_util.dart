@@ -124,9 +124,17 @@ class RouteHelper {
   }
 
   Future<T> pushNamed<T>(
-    String routeName, [
-    Object args,
-  ]) {
+    String routeName, {
+    Map<String, dynamic> args,
+    RouteBuilder routeBuilder,
+    bool replaceRoot = false,
+    bool replaceCurrent = false,
+  }) {
+    if (routeBuilder != null) {
+      args ??= Map<String, dynamic>();
+      args["routeBuilder"] = routeBuilder;
+    }
+
     return router.pushNamed(routeName, arguments: args);
   }
 
@@ -228,3 +236,5 @@ class DialogRoute<T> extends PopupRoute<T> {
   @override
   bool get opaque => false;
 }
+
+typedef RouteBuilder = PageRoute Function(Widget page);

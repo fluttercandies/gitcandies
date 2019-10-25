@@ -4,7 +4,9 @@ import 'package:flutter/services.dart';
 
 import 'package:gitcandies/constants/constants.dart';
 import 'package:gitcandies/providers/providers.dart';
+import 'package:ff_annotation_route/ff_annotation_route.dart';
 
+@FFRoute(name: "/loginpage", routeName: "登录页面")
 class LoginPage extends StatefulWidget {
   final bool pushFromSplash;
 
