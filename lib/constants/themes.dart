@@ -45,9 +45,9 @@ void showThemeDialog() {
                   color: value,
                   child: provider.themeColor == key
                       ? Icon(
-                    Icons.done,
-                    color: Colors.white,
-                  )
+                          Icons.done,
+                          color: Colors.white,
+                        )
                       : null,
                 ),
               );

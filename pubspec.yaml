@@ -1,11 +1,11 @@
 name: gitcandies
 description: A GitHub Flutter application.
 
-version: 0.1.0+10
+version: 0.1.0+11
 
 environment:
   sdk: ">=2.5.0 <3.0.0"
-  flutter: ">=1.9.1+hotfix.4"
+  flutter: ">=1.9.1+hotfix.6"
 
 dependencies:
   flutter:
@@ -20,7 +20,7 @@ dependencies:
   pull_to_refresh_notification: 0.3.2
   shared_preferences: 0.5.3+4
   oktoast: ^2.2.0
-  flutter_screenutil: ^0.6.0
+  flutter_screenutil: 0.6.0
 
 dev_dependencies:
   flutter_test:

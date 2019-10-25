@@ -4,15 +4,14 @@ import 'dart:ui' as ui;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gitcandies/widgets/widgets.dart';
 
 import 'package:gitcandies/constants/constants.dart';
 import 'package:gitcandies/pages/splash_page.dart';
 import 'package:gitcandies/providers/providers.dart';
 import 'package:gitcandies/utils/utils.dart';
 
-import 'gitcandies_route.dart';
-import 'gitcandies_route_helper.dart';
+import 'package:gitcandies/gitcandies_route.dart';
+import 'package:gitcandies/gitcandies_route_helper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,10 +52,9 @@ class GitApp extends StatelessWidget {
                       if (showStatusBar) {
                         SystemChrome.setEnabledSystemUIOverlays(
                             SystemUiOverlay.values);
-
-                        ///这里记得根据你自己的主题再设置一下。
-                        SystemChrome.setSystemUIOverlayStyle(
-                            SystemUiOverlayStyle.dark);
+//                        /// Set according to theme brightness.
+//                        SystemChrome.setSystemUIOverlayStyle(
+//                            SystemUiOverlayStyle.dark);
                       } else {
                         SystemChrome.setEnabledSystemUIOverlays([]);
                       }
@@ -102,12 +100,6 @@ class GitApp extends StatelessWidget {
                         return CupertinoPageRoute(
                             settings: settings, builder: (c) => page);
                       case PageRouteType.transparent:
-//                        return Platform.isIOS
-//                            ? EmTransparentCupertinoPageRoute(
-//                            settings: settings, builder: (c) => page)
-//                            : EmTransparentMaterialPageRoute(
-//                            settings: settings, builder: (c) => page);
-//
                         return FFTransparentPageRoute(
                             settings: settings,
                             pageBuilder: (BuildContext context,

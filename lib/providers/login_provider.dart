@@ -1,16 +1,36 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:github/server.dart';
 import 'package:oktoast/oktoast.dart';
 
 import 'package:gitcandies/configs/oauth_config.dart';
 import 'package:gitcandies/constants/constants.dart';
 import 'package:gitcandies/pages/login_page.dart';
-import 'package:gitcandies/pages/main_page.dart';
+import 'package:gitcandies/pages/main/main_page.dart';
 import 'package:gitcandies/providers/providers.dart';
 import 'package:gitcandies/utils/utils.dart';
 
 class LoginProvider extends BaseProvider {
+  void checkLogin() {
+    if (SpUtils.hasToken) {
+      loginWithToken(SpUtils.token);
+    } else {
+      RouteHelper().pushRoute(
+        PageRouteBuilder(
+          transitionDuration: Duration.zero,
+          pageBuilder: (BuildContext context, Animation animation,
+                  Animation secondaryAnimation) =>
+              FadeTransition(
+            opacity: animation,
+            child: LoginPage(),
+          ),
+        ),
+        replaceCurrent: true,
+      );
+    }
+  }
+
   Future<void> loginWithToken(String token) async {
     if (!checkInputEmpty(token, makeEmptyTip("token"))) {
       showToast("The token must not be null.");

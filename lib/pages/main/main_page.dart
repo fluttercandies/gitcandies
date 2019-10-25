@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:gitcandies/pages/main_page/main_content_page.dart';
-import 'package:gitcandies/pages/self_page.dart';
+import 'package:gitcandies/pages/main/main_content_page.dart';
+import 'package:gitcandies/pages/main/self_page.dart';
 
 import 'package:ff_annotation_route/ff_annotation_route.dart';
 
@@ -12,10 +12,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
-  final icons = [Icons.notifications, Icons.add, Icons.account_circle];
-  final titles = ["Notifications", "测试1", "Mine"];
-
-  PageController _controller = PageController(initialPage: 1);
+  final PageController _controller = PageController(initialPage: 1);
 
   @override
   void initState() {
