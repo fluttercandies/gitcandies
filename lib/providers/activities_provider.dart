@@ -10,43 +10,35 @@ class ActivitiesProvider extends BaseProvider {
 
   bool loaded = false, loading = true;
   List<Event> activities = [];
-  EventPoller eventPoller;
-  Timer pollTimer;
 
-  void delayTimer(bool refresh) {
-    pollTimer?.cancel();
-    pollTimer = Timer(Duration(seconds: 1), () {
-      donePoll(refresh);
-    });
-  }
+  Future getActivities({bool refresh = false, String username}) async {
+    final userProvider = getProvider<UserProvider>();
+    final isCurrentUser = username != null || username != userProvider
+        .currentUser.login;
+    Timer pollTimer;
 
-  void donePoll(bool refresh) async {
-    if (loading) {
-      await eventPoller?.stop();
-      loading = false;
-    }
-    if (!loaded) {
-      loaded = true;
-      notifyListeners();
-    }
-  }
-
-  Future<void> getActivities({bool refresh = false}) async {
-    if (!loaded || refresh) {
-      loading = true;
-      debugPrint("Getting activities...");
-      final userProvider = getProvider<UserProvider>();
-      eventPoller =
-          service.pollEventsReceivedByUser(userProvider.currentUser.login);
-      Stream<Event> stream =
-          eventPoller.start(onlyNew: !(!loaded || refresh)).asBroadcastStream()
-            ..listen((event) {
-              activities.add(event);
-              delayTimer(refresh);
+    loading = true;
+    debugPrint("Getting activities...");
+    EventPoller eventPoller = service
+        .pollEventsReceivedByUser(username ?? userProvider.currentUser.login);
+    Stream<Event> stream =
+        eventPoller.start(onlyNew: !(!loaded || refresh)).asBroadcastStream()
+          ..listen((event) {
+            if (isCurrentUser) activities.add(event);
+            pollTimer?.cancel();
+            pollTimer = Timer(Duration(seconds: 1), () async {
+              if (loading) {
+                await eventPoller?.stop();
+                loading = false;
+              }
+              if (!loaded) {
+                loaded = true;
+                notifyListeners();
+              }
             });
-      await stream.toList();
-    } else {
-      debugPrint("Activities loaded.");
-    }
+          });
+
+    List<Event> events = await stream.toList();
+    if (!isCurrentUser) return events;
   }
 }

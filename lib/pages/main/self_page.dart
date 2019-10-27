@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:gitcandies/constants/constants.dart';
 import 'package:gitcandies/providers/providers.dart';
-import 'package:gitcandies/pages/user_page.dart';
 import 'package:gitcandies/utils/route_util.dart';
 
 class SelfPage extends StatefulWidget {
@@ -36,7 +35,7 @@ class _SelfPageState extends State<SelfPage> {
   }
 
   Widget get actions => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        padding: EdgeInsets.symmetric(horizontal: suSetSp(8.0)),
         child: SizedBox.fromSize(
           size: Size.fromHeight(kToolbarHeight),
           child: Row(
@@ -47,29 +46,30 @@ class _SelfPageState extends State<SelfPage> {
                 padding: EdgeInsets.zero,
                 icon: Icon(Icons.exit_to_app),
                 onPressed: Provider.of<LoginProvider>(context).logout,
-                iconSize: 30.0,
+                iconSize: suSetSp(30.0),
               ),
               IconButton(
                 padding: EdgeInsets.zero,
                 icon: Icon(Icons.clear),
                 onPressed: animateToMainPage,
-                iconSize: 30.0,
+                iconSize: suSetSp(30.0),
               ),
             ],
           ),
         ),
       );
 
-  Widget get userInfo => GestureDetector(
-        onTap: () {
-          RouteHelper().pushWidget(UserPage());
-        },
-        child: Container(
-          padding: const EdgeInsets.all(16.0),
-          child: Consumer<UserProvider>(
-            builder: (context, provider, _) {
-              final user = provider.currentUser;
-              return Column(
+  Widget get userInfo => Consumer<UserProvider>(
+        builder: (context, provider, _) {
+          final user = provider.currentUser;
+          return GestureDetector(
+            onTap: () {
+              RouteHelper().router.pushNamed("/userpage",
+                  arguments: {"user": provider.currentUser});
+            },
+            child: Container(
+              padding: EdgeInsets.all(suSetSp(16.0)),
+              child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   UserAvatar(
@@ -77,22 +77,24 @@ class _SelfPageState extends State<SelfPage> {
                     size: 90.0,
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: EdgeInsets.all(suSetSp(20.0)),
                     child: Text(
                       user.login,
-                      style: Theme.of(context).textTheme.title,
+                      style: Theme.of(context).textTheme.title.copyWith(
+                        fontSize: suSetSp(21.0),
+                      ),
                     ),
                   ),
                 ],
-              );
-            },
-          ),
-        ),
+              ),
+            ),
+          );
+        },
       );
 
   Widget get setting => Expanded(
         child: Container(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(suSetSp(16.0)),
           child: ListView.builder(
             itemCount: settings.length,
             itemBuilder: (_, index) => Column(
@@ -110,14 +112,25 @@ class _SelfPageState extends State<SelfPage> {
     return InkWell(
       onTap: item['action'],
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(suSetSp(8.0)),
         child: Row(
           children: <Widget>[
-            Icon(item['icon']),
-            SizedBox(width: 8.0),
-            Text("${item['name']}"),
-            Expanded(child: SizedBox()),
-            Icon(Icons.keyboard_arrow_right),
+            Icon(
+              item['icon'],
+              size: suSetSp(24.0),
+            ),
+            SizedBox(width: suSetSp(8.0)),
+            Text(
+              "${item['name']}",
+              style: TextStyle(
+                fontSize: suSetSp(16.0),
+              ),
+            ),
+            Spacer(),
+            Icon(
+              Icons.keyboard_arrow_right,
+              size: suSetSp(24.0),
+            ),
           ],
         ),
       ),

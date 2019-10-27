@@ -17,11 +17,15 @@ class MainContentPage extends StatefulWidget {
 class _MainContentPageState extends State<MainContentPage>
     with AutomaticKeepAliveClientMixin {
   final pages = [
-    {"name": "Events", "icon": Icons.event, "page": ActivitiesPage()},
+    {
+      "name": "Events",
+      "icon": Icons.event,
+      "page": ActivitiesPage(),
+    },
     {
       "name": "Notifications",
       "icon": Icons.notifications,
-      "page": NotificationsPage()
+      "page": NotificationsPage(),
     },
     {
       "name": "Test",
@@ -48,8 +52,10 @@ class _MainContentPageState extends State<MainContentPage>
     super.build(context);
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset(R.ASSETS_CANDIES_LOGO_LOGO_WHITE_PNG,
-            height: kToolbarHeight),
+        title: Image.asset(
+          R.ASSETS_CANDIES_LOGO_LOGO_WHITE_PNG,
+          height: suSetSp(kToolbarHeight),
+        ),
         centerTitle: true,
         leading: Consumer<UserProvider>(
           builder: (context, provider, _) => UserAvatar(
@@ -60,9 +66,13 @@ class _MainContentPageState extends State<MainContentPage>
         ),
       ),
       body: IndexedStack(
-          children: pages.map<Widget>((page) => page['page']).toList(),
-          index: _tabIndex),
+        children: pages.map<Widget>((page) => page['page']).toList(),
+        index: _tabIndex,
+      ),
       bottomNavigationBar: BottomNavigationBar(
+        iconSize: suSetSp(24.0),
+        selectedFontSize: suSetSp(14.0),
+        unselectedFontSize: suSetSp(12.0),
         items: <BottomNavigationBarItem>[
           for (int i = 0; i < pages.length; i++)
             BottomNavigationBarItem(

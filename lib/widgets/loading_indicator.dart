@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import 'package:gitcandies/constants/constants.dart';
+
 class LoadingIndicator extends StatelessWidget {
   final double strokeWidth;
   final Color color;
@@ -21,7 +23,7 @@ class LoadingIndicator extends StatelessWidget {
       child: Platform.isIOS
           ? CupertinoActivityIndicator()
           : CircularProgressIndicator(
-              strokeWidth: strokeWidth,
+              strokeWidth: suSetSp(strokeWidth),
               valueColor:
                   color != null ? AlwaysStoppedAnimation<Color>(color) : null,
               value: value,

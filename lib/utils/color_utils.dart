@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ColorUtils {
-  ///
-  /// get list of material color shades from simple [Color]
-  ///
+  /// Get list of material color shades from [Color]
   static Map<int, Color> getMaterialColorValues(Color primary) => <int, Color>{
         50: getSwatchShade(primary, 50),
         100: getSwatchShade(primary, 100),
@@ -23,13 +21,14 @@ class ColorUtils {
     return hsl.withLightness(1 - (swatchValue / 1000)).toColor();
   }
 
-  static MaterialColor newColorSwatch(Color color, {bool opaque: true}) {
+  static MaterialColor colorSwatch(Color color, {bool opaque: true}) {
     final c = opaque ? color.withOpacity(1.0) : color;
     final swatch = getMaterialColorValues(c);
-    return new MaterialColor(c.value, swatch);
+    return MaterialColor(c.value, swatch);
   }
 
-  static MaterialColor swatchFor(Color color) =>
-      Colors.primaries.firstWhere((c) => c.value == color.value,
-          orElse: () => newColorSwatch(color));
+  static MaterialColor swatchFor(Color color) => Colors.primaries.firstWhere(
+        (c) => c.value == color.value,
+        orElse: () => colorSwatch(color),
+      );
 }

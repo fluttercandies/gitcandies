@@ -9,13 +9,13 @@ import 'package:gitcandies/providers/providers.dart';
 class NotificationsPage extends StatelessWidget {
   Widget _repoName(GitHub.Repository repo) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: EdgeInsets.all(suSetSp(10.0)),
       child: Row(
         children: <Widget>[
           UserAvatar(
             url: repo.owner.avatarUrl,
           ),
-          SizedBox(width: 12.0),
+          SizedBox(width: suSetSp(12.0)),
           Expanded(
             child: Text(
               repo.fullName,
@@ -32,24 +32,34 @@ class NotificationsPage extends StatelessWidget {
 
   Widget _notification(context, GitHub.Notification notification) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(suSetSp(8.0)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(suSetSp(8.0)),
             child: SvgPicture.asset(
-                "assets/octicon/${notification.subject.type}.svg"),
+                "assets/octicon/${notification.subject.type}.svg",
+              width: suSetSp(16.0),
+            ),
           ),
           Expanded(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(notification.subject.title),
+                Text(
+                  notification.subject.title,
+                  style: TextStyle(
+                    fontSize: suSetSp(16.0),
+                  ),
+                ),
+                SizedBox(height: suSetSp(4.0)),
                 Text(
                   Constants.timeHandler(notification.updatedAt),
-                  style: Theme.of(context).textTheme.caption,
+                  style: Theme.of(context).textTheme.caption.copyWith(
+                    fontSize: suSetSp(12.0),
+                  ),
                 ),
               ],
             ),
@@ -68,17 +78,14 @@ class NotificationsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             _repoName(repo),
-            Divider(height: 1.0),
+            Divider(height: suSetSp(2.0)),
             ListView.separated(
               padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              separatorBuilder: (_, __) => Divider(height: 1.0),
+              separatorBuilder: (_, __) => Divider(height: suSetSp(2.0)),
               itemCount: ns.length,
-              itemBuilder: (_, index) {
-                final n = ns[index];
-                return _notification(context, n);
-              },
+              itemBuilder: (_, index) => _notification(context, ns[index]),
             ),
           ],
         ),
@@ -108,7 +115,7 @@ class NotificationsPage extends StatelessWidget {
         (BuildContext context, int index) {
           final repo = provider.notifications[repos.elementAt(index).fullName];
           return Padding(
-            padding: const EdgeInsets.all(4.0),
+            padding: EdgeInsets.all(suSetSp(4.0)),
             child: _repo(context, repos.elementAt(index), repo),
           );
         },

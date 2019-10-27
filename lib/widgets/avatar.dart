@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:gitcandies/constants/resource.dart';
+import 'package:gitcandies/constants/constants.dart';
 
 class UserAvatar extends StatelessWidget {
   final String url;
@@ -24,11 +24,11 @@ class UserAvatar extends StatelessWidget {
           child: FadeInImage(
             fadeInDuration: const Duration(milliseconds: 100),
             placeholder: AssetImage(
-              R.ASSETS_GITHUB_OCTOCAT_OCTOCAT_JPG,
+              R.ASSETS_CANDIES_FLUTTER_CANDIES_PNG,
             ),
             image: NetworkImage(url),
-            width: size,
-            height: size,
+            width: suSetSp(size),
+            height: suSetSp(size),
             fit: BoxFit.cover,
           ),
         ),

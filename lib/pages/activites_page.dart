@@ -29,7 +29,12 @@ class ActivitiesPage extends StatelessWidget {
     } else {
       result = "No payload generated";
     }
-    return Text(result);
+    return Text(
+      result,
+      style: TextStyle(
+        fontSize: suSetSp(14.0),
+      ),
+    );
   }
 
   Widget event(context, GitHub.Event event) {
@@ -39,10 +44,10 @@ class ActivitiesPage extends StatelessWidget {
         children: <Widget>[
           Container(
             width: double.maxFinite,
-            margin: EdgeInsets.only(top: avatarSize / 2),
+            margin: EdgeInsets.only(top: suSetSp(avatarSize / 2)),
             child: Card(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(suSetSp(8.0)),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,13 +55,22 @@ class ActivitiesPage extends StatelessWidget {
 //                    tryPayload(event),
                     Text(
                       event.type,
+                      style: TextStyle(
+                        fontSize: suSetSp(14.0),
+                      ),
                     ),
                     if (event.repo != null)
                       Text(
                         event.repo.name,
+                        style: TextStyle(
+                          fontSize: suSetSp(14.0),
+                        ),
                       ),
                     Text(
                       Constants.timeHandler(event.createdAt),
+                      style: TextStyle(
+                        fontSize: suSetSp(14.0),
+                      ),
                     ),
                   ],
                 ),
@@ -66,36 +80,36 @@ class ActivitiesPage extends StatelessWidget {
           Positioned(
             top: 0.0,
             left: 0.0,
-            right: 10.0,
-            height: avatarSize + 4,
+            right: suSetSp(10.0),
+            height: suSetSp(avatarSize + 4),
             child: Stack(
               children: <Widget>[
                 Positioned(
-                  right: (avatarSize + 4) / 2,
-                  height: avatarSize + 4,
+                  right: suSetSp((avatarSize + 4) / 2),
+                  height: suSetSp(avatarSize + 4),
                   child: UnconstrainedBox(
                     child: Container(
-                      padding: EdgeInsets.only(right: (avatarSize + 4) / 2),
+                      padding: EdgeInsets.only(right: suSetSp((avatarSize) / 2)),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(avatarSize),
                         boxShadow: [
                           BoxShadow(
-                            color: Theme.of(context)
-                                .backgroundColor
-                                .withAlpha(100),
-                            blurRadius: 5.0,
+                            color: Theme.of(context).dividerColor.withAlpha(20),
+                            blurRadius: suSetSp(5.0),
                             offset: Offset(0, 1),
                           )
                         ],
                         color: Theme.of(context).cardColor,
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(suSetSp(8.0)),
                         child: Text(
                           event.actor.name ?? event.actor.login,
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
+                            fontSize: suSetSp(14.0),
                           ),
+                          textAlign: TextAlign.right,
                         ),
                       ),
                     ),
@@ -104,15 +118,14 @@ class ActivitiesPage extends StatelessWidget {
                 Positioned(
                   right: 0.0,
                   child: Container(
-                    width: avatarSize + 4,
-                    height: avatarSize + 4,
-                    padding: const EdgeInsets.all(2.0),
+                    width: suSetSp(avatarSize + 4),
+                    height: suSetSp(avatarSize + 4),
+                    padding: EdgeInsets.all(suSetSp(2.0)),
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          color:
-                              Theme.of(context).backgroundColor.withAlpha(100),
-                          blurRadius: 5.0,
+                          color: Theme.of(context).dividerColor.withAlpha(20),
+                          blurRadius: suSetSp(5.0),
                           offset: Offset(0, 1),
                         )
                       ],
@@ -123,9 +136,9 @@ class ActivitiesPage extends StatelessWidget {
                 ),
                 Positioned(
                   right: 0.0,
-                  height: avatarSize + 4,
+                  height: suSetSp(avatarSize + 4),
                   child: Padding(
-                    padding: const EdgeInsets.all(2.0),
+                    padding: EdgeInsets.all(suSetSp(2.0)),
                     child: UserAvatar(
                       url: event.actor.avatarUrl,
                       size: avatarSize,
@@ -147,7 +160,7 @@ class ActivitiesPage extends StatelessWidget {
         (BuildContext context, int index) {
           final activities = provider.activities[index];
           return Padding(
-            padding: const EdgeInsets.all(4.0),
+            padding: EdgeInsets.all(suSetSp(4.0)),
             child: event(context, activities),
           );
         },
@@ -161,7 +174,10 @@ class ActivitiesPage extends StatelessWidget {
     return Consumer<ActivitiesProvider>(
       builder: (context, provider, _) {
         return FutureBuilder(
-          future: provider.getActivities(),
+          future: () async {
+            await provider.getActivities();
+            return provider.activities;
+          }(),
           builder: (_, __) => events(provider),
         );
       },

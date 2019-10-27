@@ -76,8 +76,13 @@ class LoginProvider extends BaseProvider {
       "scopes": [
         scopes.user,
         scopes.gist,
+        scopes.workflow,
         scopes.repositories,
         scopes.notifications,
+        scopes.publicKeyAdministration,
+        scopes.gpgKeyAdministration,
+        scopes.discussionWriteAndRead,
+        scopes.organizationsRead,
         scopes.organizationsAdministration,
       ],
       "note": "admin_script",
@@ -89,6 +94,8 @@ class LoginProvider extends BaseProvider {
     var token = map["token"];
     if (token == null) {
       showToast("Login fail.");
+      logging = false;
+      notifyListeners();
       return;
     }
     loginWithToken(token);

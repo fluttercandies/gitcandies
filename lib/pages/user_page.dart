@@ -5,10 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:github/server.dart' as GitHub;
+import 'package:ff_annotation_route/ff_annotation_route.dart';
 
 import 'package:gitcandies/constants/constants.dart';
 import 'package:gitcandies/providers/providers.dart';
 
+@FFRoute(
+  name: "/userpage",
+  routeName: "用户页",
+  argumentNames: ["user"],
+)
 class UserPage extends StatefulWidget {
   final GitHub.User user;
 
@@ -23,7 +29,13 @@ class UserPage extends StatefulWidget {
 
 class _UserPageState extends State<UserPage> {
   final ScrollController _controller = ScrollController();
+  GitHub.User user;
   bool showTitle = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   void didChangeDependencies() {
@@ -34,7 +46,7 @@ class _UserPageState extends State<UserPage> {
   }
 
   void listener() {
-    double triggerHeight = 150 + kToolbarHeight;
+    double triggerHeight = suSetSp(150) + kToolbarHeight;
     if (_controller.offset >= triggerHeight && !showTitle) {
       setState(() {
         showTitle = true;
@@ -47,17 +59,15 @@ class _UserPageState extends State<UserPage> {
   }
 
   Widget wBio(GitHub.CurrentUser user, TextStyle style) => Padding(
-        padding: const EdgeInsets.only(bottom: 10.0),
+        padding: EdgeInsets.only(bottom: suSetSp(10.0)),
         child: Text(user.bio, style: style, maxLines: 1),
       );
 
   Widget wOrganizations(TextStyle style) => Consumer<OrganizationsProvider>(
         builder: (context, provider, _) {
-          if (provider.organizations.isEmpty) {
-            return SizedBox();
-          }
+          if (provider.organizations.isEmpty) return SizedBox();
           return SizedBox(
-            height: 40.0,
+            height: suSetSp(40.0),
             child: Row(
               children: <Widget>[
                 Text("Belongs: ", style: style),
@@ -68,7 +78,9 @@ class _UserPageState extends State<UserPage> {
                     itemCount: provider.organizations.length,
                     itemBuilder: (context, index) {
                       return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: suSetSp(2.0),
+                        ),
                         child: UserAvatar(
                           url: provider.organizations[index].avatarUrl,
                         ),
@@ -90,11 +102,11 @@ class _UserPageState extends State<UserPage> {
       textTheme: Theme.of(context).primaryTextTheme,
     );
     final titleStyle = theme.textTheme.title.copyWith(
-      fontSize: 20.0,
+      fontSize: suSetSp(20.0),
       fontWeight: FontWeight.w600,
     );
     final bodyStyle = theme.textTheme.body1.copyWith(
-      fontSize: 14.0,
+      fontSize: suSetSp(14.0),
     );
 
     List<Widget> content = [
@@ -115,7 +127,7 @@ class _UserPageState extends State<UserPage> {
             children: [
               WidgetSpan(
                 alignment: ui.PlaceholderAlignment.middle,
-                child: Icon(Icons.location_on, size: 14.0),
+                child: Icon(Icons.location_on, size: suSetSp(14.0)),
               ),
               TextSpan(
                 text: " ${_user.location}",
@@ -131,7 +143,7 @@ class _UserPageState extends State<UserPage> {
             children: [
               WidgetSpan(
                 alignment: ui.PlaceholderAlignment.middle,
-                child: Icon(Icons.supervised_user_circle, size: 14.0),
+                child: Icon(Icons.supervised_user_circle, size: suSetSp(14.0)),
               ),
               TextSpan(
                 text: " ${_user.company}",
@@ -147,14 +159,14 @@ class _UserPageState extends State<UserPage> {
             children: [
               WidgetSpan(
                 alignment: ui.PlaceholderAlignment.middle,
-                child: Icon(Icons.link, size: 14.0),
+                child: Icon(Icons.link, size: suSetSp(14.0)),
               ),
               TextSpan(
                 text: " ${_user.blog}",
               ),
             ],
             style: bodyStyle.copyWith(
-              color: Colors.lightBlueAccent,
+              decoration: TextDecoration.underline,
             ),
           ),
           maxLines: 1,
@@ -167,14 +179,18 @@ class _UserPageState extends State<UserPage> {
         ),
         child: Container(
           color: Theme.of(context).primaryColor,
-          padding: const EdgeInsets.fromLTRB(
-              16.0, 16.0 + kToolbarHeight, 16.0, 16.0),
+          padding: EdgeInsets.fromLTRB(
+            suSetSp(16.0),
+            suSetSp(16.0) + kToolbarHeight,
+            suSetSp(16.0),
+            suSetSp(16.0),
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(bottom: 10.0),
+                padding: EdgeInsets.only(bottom: suSetSp(10.0)),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -182,7 +198,7 @@ class _UserPageState extends State<UserPage> {
                       size: 90.0,
                       url: _user.avatarUrl,
                     ),
-                    SizedBox(width: 16.0),
+                    SizedBox(width: suSetSp(16.0)),
                     Expanded(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
@@ -190,7 +206,9 @@ class _UserPageState extends State<UserPage> {
                         children: <Widget>[
                           for (int i = 0; i < content.length; i++)
                             Padding(
-                              padding: const EdgeInsets.only(bottom: 6.0),
+                              padding: EdgeInsets.only(
+                                bottom: suSetSp(6.0),
+                              ),
                               child: content[i],
                             ),
                         ],
@@ -210,12 +228,12 @@ class _UserPageState extends State<UserPage> {
 
   Widget wContribution(user) => Card(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(suSetSp(8.0)),
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: SvgPicture.network(
               API.graphicUrl(user.login),
-              height: 80.0,
+              height: suSetSp(80.0),
             ),
           ),
         ),
@@ -231,13 +249,14 @@ class _UserPageState extends State<UserPage> {
     return PreferredSize(
       preferredSize: Size.fromHeight(kToolbarHeight),
       child: Container(
-        padding: const EdgeInsets.all(6.0),
-        height: kToolbarHeight,
+        padding: EdgeInsets.all(suSetSp(6.0)),
+        height: suSetSp(50.0),
         decoration: BoxDecoration(
           border: Border(
-              top: BorderSide(
-            color: Colors.grey[800],
-          )),
+            top: BorderSide(
+              color: Theme.of(context).dividerColor.withAlpha(100),
+            ),
+          ),
           color: Theme.of(context).primaryColor,
         ),
         child: Row(
@@ -249,14 +268,16 @@ class _UserPageState extends State<UserPage> {
                       child: Center(
                         child: Text(
                           tabs.keys.elementAt(i ~/ 2),
-                          style: Theme.of(context)
-                              .textTheme
-                              .body1
-                              .copyWith(color: Colors.white),
+                          style: Theme.of(context).textTheme.body1.copyWith(
+                                color: Colors.white,
+                                fontSize: suSetSp(14.0),
+                              ),
                         ),
                       ),
                     )
-                  : VerticalDivider(color: Colors.grey[700]),
+                  : VerticalDivider(
+                      color: Theme.of(context).dividerColor.withAlpha(200),
+                    ),
           ],
         ),
       ),
@@ -265,8 +286,8 @@ class _UserPageState extends State<UserPage> {
 
   @override
   Widget build(BuildContext context) {
-    final user =
-        this.widget.user ?? Provider.of<UserProvider>(context).currentUser;
+    if (user == null)
+      user = this.widget.user ?? Provider.of<UserProvider>(context).currentUser;
     final organizationsProvider = Provider.of<OrganizationsProvider>(context);
     if (!organizationsProvider.loaded)
       organizationsProvider.getOrganizations(refresh: true);
@@ -281,12 +302,19 @@ class _UserPageState extends State<UserPage> {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         UserAvatar(url: user.avatarUrl),
-                        SizedBox(width: 6.0),
-                        Text(user.name ?? user.login),
+                        SizedBox(width: suSetSp(6.0)),
+                        Text(
+                          user.name ?? user.login,
+                          style: TextStyle(
+                            fontSize: suSetSp(14.0),
+                          ),
+                        ),
                       ],
                     )
                   : null,
-              flexibleSpace: FlexibleSpaceBar(background: userInfo(context)),
+              flexibleSpace: FlexibleSpaceBar(
+                background: userInfo(context),
+              ),
               expandedHeight: kToolbarHeight +
                   (organizationsProvider.organizations.isEmpty ? 168 : 208) +
                   kToolbarHeight,

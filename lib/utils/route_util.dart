@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:gitcandies/constants/constants.dart';
-import 'package:gitcandies/pages/login_page.dart';
-
-class RouteUtils {
-  static Map<String, WidgetBuilder> get routes => {
-        "/login": (_) => LoginPage(),
-      };
-}
 
 class FadePageTransitionsBuilder extends PageTransitionsBuilder {
   const FadePageTransitionsBuilder();
@@ -214,14 +207,21 @@ class DialogRoute<T> extends PopupRoute<T> {
   String get barrierLabel => "dialog_route";
 
   @override
-  Widget buildPage(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation) {
+  Widget buildPage(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+  ) {
     return dialogBuilder(context, animation, secondaryAnimation);
   }
 
   @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
     if (transitionBuilder == null) {
       return FadeTransition(
           opacity: CurvedAnimation(

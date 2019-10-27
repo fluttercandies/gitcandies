@@ -1,7 +1,7 @@
 name: gitcandies
 description: A GitHub Flutter application.
 
-version: 0.1.0+12
+version: 0.1.0+13
 
 environment:
   sdk: ">=2.5.0 <3.0.0"
@@ -11,14 +11,14 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_svg: 0.14.2
+  flutter_svg: 0.14.3
 #  github: 5.4.0
   github:
     git: https://github.com/AlexVincent525/github.dart.git
   intl: any
   provider: 3.1.0+1
   pull_to_refresh_notification: 0.3.2
-  shared_preferences: 0.5.3+4
+  shared_preferences: 0.5.4+1
   oktoast: ^2.2.0
   flutter_screenutil: 0.6.0
 
@@ -38,16 +38,3 @@ flutter:
     - assets/github/mark/
     - assets/github/octocat/
     - assets/octicon/
-
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #

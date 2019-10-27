@@ -22,4 +22,9 @@ class OrganizationsProvider extends BaseProvider {
       debugPrint("Organizations loaded.");
     }
   }
+
+  Future<List<Organization>> getOrganizationsByUser(String username,
+      {int page}) async {
+    return await _organizations.list(username).toList();
+  }
 }

@@ -18,20 +18,15 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   Widget get cover => Container(
-        padding: const EdgeInsets.all(80.0),
+        padding: EdgeInsets.all(suSetSp(80.0)),
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
         ),
         child: Center(
           child: Image.asset(
             R.ASSETS_LOGO_FRONT_PNG,
-            width: Screen.width / 2,
+            width: suSetSp(240.0),
           ),
         ),
       );
