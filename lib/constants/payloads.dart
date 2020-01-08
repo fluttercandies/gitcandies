@@ -2,7 +2,7 @@
 /// [Author] Alex (https://github.com/AlexVicnent525)
 /// [Date] 2019-10-25 16:17
 ///
-import 'package:github/server.dart';
+import 'package:github/github.dart';
 import "package:json_annotation/json_annotation.dart";
 
 /// API doc: https://developer.github.com/v3/activity/events/types
@@ -77,7 +77,7 @@ class IssueCommentEventPayload {
     return IssueCommentEventPayload()
       ..action = input['action']
       ..changes = input['changes']
-      ..issue = Issue.fromJSON(input['issue'])
-      ..comment = IssueComment.fromJSON(input['comment']);
+      ..issue = Issue.fromJson(input['issue'])
+      ..comment = IssueComment.fromJson(input['comment']);
   }
 }

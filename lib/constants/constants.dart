@@ -8,6 +8,8 @@ export 'package:gitcandies/constants/scopes.dart';
 export 'package:gitcandies/constants/screens.dart';
 export 'package:gitcandies/constants/themes.dart';
 export 'package:gitcandies/constants/widgets.dart';
+export 'package:gitcandies/providers/providers.dart';
+export 'package:gitcandies/utils/utils.dart';
 
 class Constants {
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();

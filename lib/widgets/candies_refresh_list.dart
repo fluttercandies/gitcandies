@@ -46,7 +46,7 @@ class CandiesRefreshList extends StatelessWidget {
   Widget build(BuildContext context) {
     return pTRN.PullToRefreshNotification(
       onRefresh: onRefresh,
-      maxDragOffset: suSetSp(kToolbarHeight * 1.5),
+      maxDragOffset: suSetHeight(kToolbarHeight * 1.5),
       child: CustomScrollView(
         physics: const ClampingScrollPhysics(),
         slivers: <Widget>[
@@ -109,7 +109,7 @@ class _RefreshLogoState extends State<RefreshLogo>
 
   Widget get logo => Image.asset(
         R.ASSETS_CANDIES_LOLLIPOP_WITHOUT_STICK_PNG,
-        height: math.min(widget.offset, suSetSp(50.0)),
+        height: math.min(widget.offset, suSetWidth(70.0)),
       );
 
   @override
@@ -122,8 +122,8 @@ class _RefreshLogoState extends State<RefreshLogo>
       stopAnimate();
     }
     return Container(
-        width: math.min(widget.offset, suSetSp(50)),
-        height: math.min(widget.offset, suSetSp(50)),
+        width: math.min(widget.offset, suSetWidth(70.0)),
+        height: math.min(widget.offset, suSetWidth(70.0)),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           boxShadow: [

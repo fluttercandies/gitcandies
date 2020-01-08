@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 
 import 'package:gitcandies/constants/constants.dart';
 import 'package:gitcandies/providers/providers.dart';
@@ -19,20 +20,23 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Widget get cover => Container(
-        padding: EdgeInsets.all(suSetSp(80.0)),
+        padding: EdgeInsets.all(suSetWidth(80.0)),
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
         ),
         child: Center(
           child: Image.asset(
             R.ASSETS_LOGO_FRONT_PNG,
-            width: suSetSp(240.0),
+            width: suSetWidth(240.0),
           ),
         ),
       );
 
   @override
   Widget build(BuildContext context) {
-    return cover;
+    return AnnotatedRegion(
+      value: SystemUiOverlayStyle.light,
+      child: cover,
+    );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:github/server.dart';
+import 'package:github/github.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
 

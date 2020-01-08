@@ -3,7 +3,6 @@ import 'package:gitcandies/pages/activites_page.dart';
 
 import 'package:gitcandies/constants/constants.dart';
 import 'package:gitcandies/pages/notifications_page.dart';
-import 'package:gitcandies/providers/providers.dart';
 
 class MainContentPage extends StatefulWidget {
   final PageController controller;
@@ -30,7 +29,7 @@ class _MainContentPageState extends State<MainContentPage>
     {
       "name": "Test",
       "icon": Icons.add,
-      "page": SizedBox(),
+      "page": SizedBox.shrink(),
     },
   ];
 
@@ -54,12 +53,12 @@ class _MainContentPageState extends State<MainContentPage>
       appBar: AppBar(
         title: Image.asset(
           R.ASSETS_CANDIES_LOGO_LOGO_WHITE_PNG,
-          height: suSetSp(kToolbarHeight),
+          height: suSetHeight(kToolbarHeight),
         ),
         centerTitle: true,
         leading: Consumer<UserProvider>(
           builder: (context, provider, _) => UserAvatar(
-            size: 36.0,
+            size: 52.0,
             url: provider.currentUser.avatarUrl,
             onTap: animateToSelfPage,
           ),
@@ -70,9 +69,9 @@ class _MainContentPageState extends State<MainContentPage>
         index: _tabIndex,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        iconSize: suSetSp(24.0),
-        selectedFontSize: suSetSp(14.0),
-        unselectedFontSize: suSetSp(12.0),
+        iconSize: suSetWidth(36.0),
+        selectedFontSize: suSetSp(24.0),
+        unselectedFontSize: suSetSp(20.0),
         items: <BottomNavigationBarItem>[
           for (int i = 0; i < pages.length; i++)
             BottomNavigationBarItem(

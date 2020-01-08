@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:github/server.dart';
+import 'package:github/github.dart';
 import 'package:oktoast/oktoast.dart';
 
 import 'package:gitcandies/configs/oauth_config.dart';
@@ -17,18 +17,23 @@ class LoginProvider extends BaseProvider {
     if (SpUtils.hasToken) {
       loginWithToken(SpUtils.token);
     } else {
-      RouteHelper().pushRoute(
-        PageRouteBuilder(
-          transitionDuration: Duration.zero,
-          pageBuilder: (BuildContext context, Animation animation,
-                  Animation secondaryAnimation) =>
-              FadeTransition(
-            opacity: animation,
-            child: LoginPage(),
+      Future.delayed(const Duration(seconds: 2), () {
+        RouteHelper().pushRoute(
+          PageRouteBuilder(
+            transitionDuration: Duration.zero,
+            pageBuilder: (
+              BuildContext context,
+              Animation animation,
+              Animation secondaryAnimation,
+            ) =>
+                FadeTransition(
+              opacity: animation,
+              child: LoginPage(),
+            ),
           ),
-        ),
-        replaceCurrent: true,
-      );
+          replaceCurrent: true,
+        );
+      });
     }
   }
 
@@ -39,7 +44,7 @@ class LoginProvider extends BaseProvider {
     }
     final auth = Authentication.withToken(token);
     try {
-      GitHub client = createGitHubClient(auth: auth);
+      final client = GitHub(auth: auth);
       final user = await client.users.getCurrentUser();
       _onLoginSuccess(client, user, token);
     } catch (e) {

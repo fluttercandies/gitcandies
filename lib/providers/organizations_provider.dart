@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:github/server.dart';
+import 'package:github/github.dart';
 
 import 'package:gitcandies/providers/providers.dart';
 

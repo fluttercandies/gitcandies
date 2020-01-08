@@ -1,10 +1,8 @@
-import 'dart:io';
-import 'dart:ui' as ui show window;
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'package:gitcandies/utils/utils.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Screen {
   static MediaQueryData mediaQuery = MediaQueryData.fromWindow(ui.window);
@@ -24,6 +22,8 @@ class Screen {
 
   static double get bottomSafeHeight => mediaQuery.padding.bottom;
 
+  static double get safeHeight => height - topSafeHeight - bottomSafeHeight;
+
   static updateStatusBarStyle(SystemUiOverlayStyle style) {
     SystemChrome.setSystemUIOverlayStyle(style);
   }
@@ -33,16 +33,17 @@ class Screen {
   }
 }
 
+///
 /// Screen capability method.
-double suSetSp(num size, {double scale = 1}) {
-  double value = ScreenUtil.instance.setSp(size) * 1.8;
-  if (Platform.isIOS) {
-    if (ScreenUtil.screenWidthDp <= 414.0) {
-      value = size / 1.2;
-    } else if (ScreenUtil.screenWidthDp > 414.0 &&
-        ScreenUtil.screenWidthDp > 750.0) {
-      value = size;
-    }
-  }
-  return value * scale;
-}
+///
+double suSetSp(double size, {double scale}) =>
+    _sizeCapable(ScreenUtil.getInstance().setSp(size) * 2, scale: scale);
+
+double suSetWidth(double size, {double scale}) =>
+    _sizeCapable(ScreenUtil.getInstance().setWidth(size) * 2, scale: scale);
+
+double suSetHeight(double size, {double scale}) =>
+    _sizeCapable(ScreenUtil.getInstance().setHeight(size) * 2, scale: scale);
+
+double _sizeCapable(double size, {double scale}) =>
+    size * (scale ?? 1.0);

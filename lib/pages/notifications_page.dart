@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:github/server.dart' as GitHub;
+import 'package:github/github.dart' as GitHub;
 
 import 'package:gitcandies/constants/constants.dart';
 import 'package:gitcandies/providers/providers.dart';
@@ -9,18 +9,19 @@ import 'package:gitcandies/providers/providers.dart';
 class NotificationsPage extends StatelessWidget {
   Widget _repoName(GitHub.Repository repo) {
     return Padding(
-      padding: EdgeInsets.all(suSetSp(10.0)),
+      padding: EdgeInsets.all(suSetWidth(16.0)),
       child: Row(
         children: <Widget>[
           UserAvatar(
             url: repo.owner.avatarUrl,
+            size: 54.0,
           ),
-          SizedBox(width: suSetSp(12.0)),
+          SizedBox(width: suSetWidth(12.0)),
           Expanded(
             child: Text(
               repo.fullName,
               style: TextStyle(
-                fontSize: 15.0,
+                fontSize: suSetSp(28.0),
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -32,15 +33,24 @@ class NotificationsPage extends StatelessWidget {
 
   Widget _notification(context, GitHub.Notification notification) {
     return Padding(
-      padding: EdgeInsets.all(suSetSp(8.0)),
+      padding: EdgeInsets.symmetric(
+        horizontal: suSetWidth(16.0),
+        vertical: suSetHeight(6.0),
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(suSetSp(8.0)),
-            child: SvgPicture.asset(
+          Container(
+            margin: EdgeInsets.only(right: suSetWidth(10.0)),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: suSetWidth(12.0),
+                vertical: suSetHeight(6.0),
+              ),
+              child: SvgPicture.asset(
                 "assets/octicon/${notification.subject.type}.svg",
-              width: suSetSp(16.0),
+                width: suSetWidth(28.0),
+              ),
             ),
           ),
           Expanded(
@@ -50,16 +60,14 @@ class NotificationsPage extends StatelessWidget {
               children: <Widget>[
                 Text(
                   notification.subject.title,
-                  style: TextStyle(
-                    fontSize: suSetSp(16.0),
-                  ),
+                  style: TextStyle(fontSize: suSetSp(26.0)),
                 ),
-                SizedBox(height: suSetSp(4.0)),
+                SizedBox(height: suSetHeight(4.0)),
                 Text(
                   Constants.timeHandler(notification.updatedAt),
                   style: Theme.of(context).textTheme.caption.copyWith(
-                    fontSize: suSetSp(12.0),
-                  ),
+                        fontSize: suSetSp(20.0),
+                      ),
                 ),
               ],
             ),
@@ -78,12 +86,12 @@ class NotificationsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             _repoName(repo),
-            Divider(height: suSetSp(2.0)),
+            Divider(height: suSetHeight(2.0)),
             ListView.separated(
               padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              separatorBuilder: (_, __) => Divider(height: suSetSp(2.0)),
+              separatorBuilder: (_, __) => Divider(height: suSetHeight(2.0)),
               itemCount: ns.length,
               itemBuilder: (_, index) => _notification(context, ns[index]),
             ),
@@ -115,7 +123,7 @@ class NotificationsPage extends StatelessWidget {
         (BuildContext context, int index) {
           final repo = provider.notifications[repos.elementAt(index).fullName];
           return Padding(
-            padding: EdgeInsets.all(suSetSp(4.0)),
+            padding: EdgeInsets.all(suSetWidth(4.0)),
             child: _repo(context, repos.elementAt(index), repo),
           );
         },

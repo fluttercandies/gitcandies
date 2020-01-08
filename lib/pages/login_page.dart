@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:ff_annotation_route/ff_annotation_route.dart';
+import 'package:flutter/services.dart';
 
 import 'package:gitcandies/constants/constants.dart';
 import 'package:gitcandies/providers/providers.dart';
-import 'package:ff_annotation_route/ff_annotation_route.dart';
 
 @FFRoute(name: "/loginpage", routeName: "登录页面")
 class LoginPage extends StatefulWidget {
@@ -25,15 +26,18 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
 
   double get buttonHeight => 46.0;
 
+  TextStyle get labelStyle => Theme.of(context).textTheme.body1.copyWith(
+        fontSize: suSetSp(26.0),
+      );
+
   TextStyle get fieldStyle => Theme.of(context).textTheme.body1.copyWith(
-        fontSize: suSetSp(20.0),
+        fontSize: suSetSp(32.0),
+        height: 1.1,
         textBaseline: TextBaseline.alphabetic,
       );
 
   StrutStyle get fieldStrutStyle => StrutStyle(
-        fontSize: suSetSp(20.0),
-        height: suSetSp(1.5),
-        forceStrutHeight: true,
+        fontSize: suSetSp(32.0),
       );
 
   @override
@@ -61,14 +65,14 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
         width: Screen.width,
         height: Screen.height,
         child: Container(
-          padding: EdgeInsets.all(suSetSp(80.0)),
+          padding: EdgeInsets.all(suSetWidth(80.0)),
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,
           ),
           child: Center(
             child: Image.asset(
               R.ASSETS_LOGO_FRONT_PNG,
-              width: suSetSp(240.0),
+              width: suSetWidth(240.0),
             ),
           ),
         ),
@@ -110,17 +114,17 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
         top: 0.0,
         left: 0.0,
         right: 0.0,
-        height: suSetSp(180.0),
+        height: suSetSp(180.0) + Screen.topSafeHeight,
         child: Center(
           child: Image.asset(
             R.ASSETS_CANDIES_LOGO_LOGO_WHITE_PNG,
-            height: suSetSp(180 - kToolbarHeight),
+            height: suSetHeight(180 - kToolbarHeight),
           ),
         ),
       );
 
   Widget get content => Positioned(
-        top: suSetSp(190.0),
+        top: suSetHeight(190.0),
         bottom: 0.0,
         width: Screen.width,
         child: basicLoginField,
@@ -132,8 +136,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: suSetSp(40.0),
-              vertical: suSetSp(20.0),
+              horizontal: suSetWidth(40.0),
+              vertical: suSetHeight(20.0),
             ),
             child: Column(
               children: <Widget>[
@@ -147,32 +151,26 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
       );
 
   Widget get usernameField => Consumer<LoginProvider>(
-        builder: (context, provider, _) => Container(
-          child: TextField(
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.symmetric(
-                horizontal: suSetSp(6.0),
-                vertical: suSetSp(10.0),
-              ),
-              labelText: "GitHub username",
-              labelStyle: Theme.of(context).textTheme.body1.copyWith(
-                    fontSize: suSetSp(16.0),
-                  ),
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: Colors.grey[350],
-                ),
-              ),
-              prefixIcon: Icon(Icons.person, size: suSetSp(24.0)),
+        builder: (context, provider, _) => TextField(
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: suSetWidth(6.0),
+              vertical: suSetHeight(14.0),
             ),
-            style: fieldStyle,
-            strutStyle: fieldStrutStyle,
-            onChanged: (String username) {
-              _username = username;
-            },
-            autofocus: true,
-            enabled: !provider.logging,
+            labelText: "GitHub username",
+            labelStyle: labelStyle,
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey[350]),
+            ),
+            prefixIcon: Icon(Icons.person, size: suSetWidth(32.0)),
           ),
+          style: fieldStyle,
+          strutStyle: fieldStrutStyle,
+          onChanged: (String username) {
+            _username = username;
+          },
+          autofocus: true,
+          enabled: !provider.logging,
         ),
       );
 
@@ -181,24 +179,20 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
           child: TextField(
             decoration: InputDecoration(
               contentPadding: EdgeInsets.symmetric(
-                horizontal: suSetSp(6.0),
-                vertical: suSetSp(10.0),
+                horizontal: suSetWidth(6.0),
+                vertical: suSetHeight(14.0),
               ),
               labelText: "Password",
-              labelStyle: Theme.of(context).textTheme.body1.copyWith(
-                    fontSize: suSetSp(16.0),
-                  ),
+              labelStyle: labelStyle,
               enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: Colors.grey[350],
-                ),
+                borderSide: BorderSide(color: Colors.grey[350]),
               ),
-              prefixIcon: Icon(Icons.lock, size: suSetSp(16.0)),
+              prefixIcon: Icon(Icons.lock, size: suSetWidth(32.0)),
               suffixIcon: IconButton(
                 icon: Icon(
                   obscured ? Icons.visibility_off : Icons.visibility,
                   color: obscured ? Colors.grey[500] : Colors.black,
-                  size: suSetSp(24.0),
+                  size: suSetWidth(32.0),
                 ),
                 onPressed: () {
                   setState(() {
@@ -223,12 +217,12 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
           return AnimatedContainer(
             duration: kTabScrollDuration,
             margin: EdgeInsets.only(
-              top: suSetSp(buttonHeight / 2),
+              top: suSetHeight(buttonHeight / 2),
             ),
-            width: provider.logging ? suSetSp(100.0) : Screen.width,
+            width: provider.logging ? suSetWidth(100.0) : Screen.width,
             height: buttonHeight,
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(suSetSp(buttonHeight / 2)),
+              borderRadius: BorderRadius.circular(suSetWidth(buttonHeight)),
               child: Stack(
                 children: <Widget>[
                   FlatButton(
@@ -242,15 +236,15 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                 style:
                                     Theme.of(context).textTheme.title.copyWith(
                                           color: Colors.white,
-                                          fontSize: suSetSp(21.0),
+                                          fontSize: suSetSp(32.0),
                                         ),
                               )
-                            : SizedBox(
-                                width: suSetSp(24.0),
-                                height: suSetSp(24.0),
+                            : SizedBox.fromSize(
+                                size: Size.square(suSetWidth(24.0)),
                                 child: CircularProgressIndicator(
                                   valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.grey),
+                                    Colors.grey,
+                                  ),
                                 ),
                               ),
                         duration: kTabScrollDuration,
@@ -297,14 +291,17 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          waver,
-          header,
-          content,
-          cover,
-        ],
+    return AnnotatedRegion(
+      value: SystemUiOverlayStyle.light,
+      child: Scaffold(
+        body: Stack(
+          children: <Widget>[
+            waver,
+            header,
+            content,
+            cover,
+          ],
+        ),
       ),
     );
   }

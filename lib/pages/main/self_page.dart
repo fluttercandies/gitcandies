@@ -35,7 +35,7 @@ class _SelfPageState extends State<SelfPage> {
   }
 
   Widget get actions => Padding(
-        padding: EdgeInsets.symmetric(horizontal: suSetSp(8.0)),
+        padding: EdgeInsets.symmetric(horizontal: suSetWidth(8.0)),
         child: SizedBox.fromSize(
           size: Size.fromHeight(kToolbarHeight),
           child: Row(
@@ -46,13 +46,13 @@ class _SelfPageState extends State<SelfPage> {
                 padding: EdgeInsets.zero,
                 icon: Icon(Icons.exit_to_app),
                 onPressed: Provider.of<LoginProvider>(context).logout,
-                iconSize: suSetSp(30.0),
+                iconSize: suSetWidth(42.0),
               ),
               IconButton(
                 padding: EdgeInsets.zero,
                 icon: Icon(Icons.clear),
                 onPressed: animateToMainPage,
-                iconSize: suSetSp(30.0),
+                iconSize: suSetWidth(42.0),
               ),
             ],
           ),
@@ -68,21 +68,21 @@ class _SelfPageState extends State<SelfPage> {
                   arguments: {"user": provider.currentUser});
             },
             child: Container(
-              padding: EdgeInsets.all(suSetSp(16.0)),
+              padding: EdgeInsets.all(suSetWidth(16.0)),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   UserAvatar(
                     url: user.avatarUrl,
-                    size: 90.0,
+                    size: 100.0,
                   ),
                   Padding(
-                    padding: EdgeInsets.all(suSetSp(20.0)),
+                    padding: EdgeInsets.all(suSetWidth(20.0)),
                     child: Text(
                       user.login,
                       style: Theme.of(context).textTheme.title.copyWith(
-                        fontSize: suSetSp(21.0),
-                      ),
+                            fontSize: suSetSp(30.0),
+                          ),
                     ),
                   ),
                 ],
@@ -94,7 +94,7 @@ class _SelfPageState extends State<SelfPage> {
 
   Widget get setting => Expanded(
         child: Container(
-          padding: EdgeInsets.all(suSetSp(16.0)),
+          padding: EdgeInsets.all(suSetWidth(16.0)),
           child: ListView.builder(
             itemCount: settings.length,
             itemBuilder: (_, index) => Column(
@@ -112,24 +112,22 @@ class _SelfPageState extends State<SelfPage> {
     return InkWell(
       onTap: item['action'],
       child: Padding(
-        padding: EdgeInsets.all(suSetSp(8.0)),
+        padding: EdgeInsets.all(suSetWidth(8.0)),
         child: Row(
           children: <Widget>[
             Icon(
               item['icon'],
-              size: suSetSp(24.0),
+              size: suSetWidth(42.0),
             ),
-            SizedBox(width: suSetSp(8.0)),
+            SizedBox(width: suSetWidth(16.0)),
             Text(
               "${item['name']}",
-              style: TextStyle(
-                fontSize: suSetSp(16.0),
-              ),
+              style: TextStyle(fontSize: suSetSp(30.0)),
             ),
             Spacer(),
             Icon(
               Icons.keyboard_arrow_right,
-              size: suSetSp(24.0),
+              size: suSetWidth(42.0),
             ),
           ],
         ),

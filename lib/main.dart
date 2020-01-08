@@ -16,6 +16,7 @@ import 'package:gitcandies/gitcandies_route_helper.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SpUtils.initInstance();
+
   if (ui.window.physicalSize.isEmpty) {
     ui.window.onMetricsChanged = () {
       if (!ui.window.physicalSize.isEmpty) {
@@ -36,7 +37,7 @@ class GitApp extends StatelessWidget {
         providers: providers,
         child: Consumer<ThemesProvider>(
           builder: (context, provider, _) {
-            String colorKey = provider.themeColor;
+            final colorKey = provider.themeColor;
             Color _themeColor;
             if (themeColorMap[colorKey] != null) {
               _themeColor = themeColorMap[colorKey];
@@ -50,27 +51,22 @@ class GitApp extends StatelessWidget {
                     SystemChrome.setEnabledSystemUIOverlays(
                       SystemUiOverlay.values,
                     );
-//                        /// Set according to theme brightness.
-//                        SystemChrome.setSystemUIOverlayStyle(
-//                            SystemUiOverlayStyle.dark);
                   } else {
                     SystemChrome.setEnabledSystemUIOverlays([]);
                   }
                 })
               ],
               builder: (c, w) {
-                ScreenUtil.instance = ScreenUtil(
-                  width: 750,
-                  height: 1334,
-                  allowFontScaling: true,
-                )..init(c);
+                ScreenUtil.instance = ScreenUtil.getInstance()
+                  ..allowFontScaling = true
+                  ..init(c);
                 return NoScaleTextWidget(child: w);
               },
               theme: ThemeData(
                 primarySwatch: ColorUtils.swatchFor(_themeColor),
               ),
               onGenerateRoute: (RouteSettings settings) {
-                var routeResult = getRouteResult(
+                RouteResult routeResult = getRouteResult(
                   name: settings.name,
                   arguments: settings.arguments,
                 );

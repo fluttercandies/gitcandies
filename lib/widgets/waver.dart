@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:gitcandies/constants/constants.dart';
 import 'package:vector_math/vector_math.dart' as Vector;
 
 class Waver extends StatefulWidget {
@@ -74,7 +73,7 @@ class _WaverState extends State<Waver> with TickerProviderStateMixin {
         builder: (context, child) => ClipPath(
           child: Container(
             width: widget.size.width,
-            height: suSetSp(widget.size.height),
+            height: widget.size.height,
             color: widget.color,
           ),
           clipper: WaveClipper(animationController.value, animationList),

@@ -23,7 +23,7 @@ class LoadingIndicator extends StatelessWidget {
       child: Platform.isIOS
           ? CupertinoActivityIndicator()
           : CircularProgressIndicator(
-              strokeWidth: suSetSp(strokeWidth),
+              strokeWidth: suSetWidth(strokeWidth),
               valueColor:
                   color != null ? AlwaysStoppedAnimation<Color>(color) : null,
               value: value,

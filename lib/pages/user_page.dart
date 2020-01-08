@@ -4,7 +4,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:github/server.dart' as GitHub;
+import 'package:github/github.dart' as GitHub;
 import 'package:ff_annotation_route/ff_annotation_route.dart';
 
 import 'package:gitcandies/constants/constants.dart';
@@ -46,7 +46,7 @@ class _UserPageState extends State<UserPage> {
   }
 
   void listener() {
-    double triggerHeight = suSetSp(150) + kToolbarHeight;
+    double triggerHeight = suSetHeight(150.0) + kToolbarHeight;
     if (_controller.offset >= triggerHeight && !showTitle) {
       setState(() {
         showTitle = true;
@@ -59,7 +59,7 @@ class _UserPageState extends State<UserPage> {
   }
 
   Widget wBio(GitHub.CurrentUser user, TextStyle style) => Padding(
-        padding: EdgeInsets.only(bottom: suSetSp(10.0)),
+        padding: EdgeInsets.only(bottom: suSetSp(16.0)),
         child: Text(user.bio, style: style, maxLines: 1),
       );
 
@@ -67,7 +67,7 @@ class _UserPageState extends State<UserPage> {
         builder: (context, provider, _) {
           if (provider.organizations.isEmpty) return SizedBox();
           return SizedBox(
-            height: suSetSp(40.0),
+            height: suSetHeight(50.0),
             child: Row(
               children: <Widget>[
                 Text("Belongs: ", style: style),
@@ -79,10 +79,11 @@ class _UserPageState extends State<UserPage> {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: EdgeInsets.symmetric(
-                          horizontal: suSetSp(2.0),
+                          horizontal: suSetWidth(2.0),
                         ),
                         child: UserAvatar(
                           url: provider.organizations[index].avatarUrl,
+                          size: 42.0,
                         ),
                       );
                     },
@@ -95,18 +96,18 @@ class _UserPageState extends State<UserPage> {
       );
 
   Widget userInfo(context) {
-    GitHub.User _user =
-        this.widget.user ?? Provider.of<UserProvider>(context).currentUser;
+    final _user =
+        widget.user ?? Provider.of<UserProvider>(context).currentUser;
     final theme = Theme.of(context).copyWith(
       iconTheme: Theme.of(context).primaryIconTheme,
       textTheme: Theme.of(context).primaryTextTheme,
     );
     final titleStyle = theme.textTheme.title.copyWith(
-      fontSize: suSetSp(20.0),
+      fontSize: suSetSp(44.0),
       fontWeight: FontWeight.w600,
     );
     final bodyStyle = theme.textTheme.body1.copyWith(
-      fontSize: suSetSp(14.0),
+      fontSize: suSetSp(24.0),
     );
 
     List<Widget> content = [
@@ -127,7 +128,7 @@ class _UserPageState extends State<UserPage> {
             children: [
               WidgetSpan(
                 alignment: ui.PlaceholderAlignment.middle,
-                child: Icon(Icons.location_on, size: suSetSp(14.0)),
+                child: Icon(Icons.location_on, size: suSetWidth(14.0)),
               ),
               TextSpan(
                 text: " ${_user.location}",
@@ -143,7 +144,8 @@ class _UserPageState extends State<UserPage> {
             children: [
               WidgetSpan(
                 alignment: ui.PlaceholderAlignment.middle,
-                child: Icon(Icons.supervised_user_circle, size: suSetSp(14.0)),
+                child:
+                    Icon(Icons.supervised_user_circle, size: suSetWidth(14.0)),
               ),
               TextSpan(
                 text: " ${_user.company}",
@@ -159,7 +161,7 @@ class _UserPageState extends State<UserPage> {
             children: [
               WidgetSpan(
                 alignment: ui.PlaceholderAlignment.middle,
-                child: Icon(Icons.link, size: suSetSp(14.0)),
+                child: Icon(Icons.link, size: suSetWidth(14.0)),
               ),
               TextSpan(
                 text: " ${_user.blog}",
@@ -179,47 +181,45 @@ class _UserPageState extends State<UserPage> {
         ),
         child: Container(
           color: Theme.of(context).primaryColor,
-          padding: EdgeInsets.fromLTRB(
-            suSetSp(16.0),
-            suSetSp(16.0) + kToolbarHeight,
-            suSetSp(16.0),
-            suSetSp(16.0),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(bottom: suSetSp(10.0)),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    UserAvatar(
-                      size: 90.0,
-                      url: _user.avatarUrl,
-                    ),
-                    SizedBox(width: suSetSp(16.0)),
-                    Expanded(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          for (int i = 0; i < content.length; i++)
-                            Padding(
-                              padding: EdgeInsets.only(
-                                bottom: suSetSp(6.0),
-                              ),
-                              child: content[i],
-                            ),
-                        ],
+          padding: EdgeInsets.only(top: kToolbarHeight),
+          child: Padding(
+            padding: EdgeInsets.all(suSetWidth(16.0)),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(bottom: suSetHeight(10.0)),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      UserAvatar(
+                        size: 90.0,
+                        url: _user.avatarUrl,
                       ),
-                    ),
-                  ],
+                      SizedBox(width: suSetWidth(16.0)),
+                      Expanded(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            for (int i = 0; i < content.length; i++)
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  bottom: suSetHeight(10.0),
+                                ),
+                                child: content[i],
+                              ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              if (_user.bio != null) wBio(_user, bodyStyle),
-              wOrganizations(bodyStyle),
-            ],
+                if (_user.bio != null) wBio(_user, bodyStyle),
+                wOrganizations(bodyStyle),
+              ],
+            ),
           ),
         ),
       ),
@@ -228,12 +228,12 @@ class _UserPageState extends State<UserPage> {
 
   Widget wContribution(user) => Card(
         child: Padding(
-          padding: EdgeInsets.all(suSetSp(8.0)),
+          padding: EdgeInsets.all(suSetWidth(8.0)),
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: SvgPicture.network(
               API.graphicUrl(user.login),
-              height: suSetSp(80.0),
+              height: suSetHeight(100.0),
             ),
           ),
         ),
@@ -249,8 +249,8 @@ class _UserPageState extends State<UserPage> {
     return PreferredSize(
       preferredSize: Size.fromHeight(kToolbarHeight),
       child: Container(
-        padding: EdgeInsets.all(suSetSp(6.0)),
-        height: suSetSp(50.0),
+        padding: EdgeInsets.all(suSetWidth(6.0)),
+        height: suSetHeight(60.0),
         decoration: BoxDecoration(
           border: Border(
             top: BorderSide(
@@ -270,7 +270,7 @@ class _UserPageState extends State<UserPage> {
                           tabs.keys.elementAt(i ~/ 2),
                           style: Theme.of(context).textTheme.body1.copyWith(
                                 color: Colors.white,
-                                fontSize: suSetSp(14.0),
+                                fontSize: suSetSp(24.0),
                               ),
                         ),
                       ),
@@ -301,12 +301,12 @@ class _UserPageState extends State<UserPage> {
                   ? Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        UserAvatar(url: user.avatarUrl),
-                        SizedBox(width: suSetSp(6.0)),
+                        UserAvatar(url: user.avatarUrl, size: 48.0),
+                        SizedBox(width: suSetWidth(6.0)),
                         Text(
                           user.name ?? user.login,
                           style: TextStyle(
-                            fontSize: suSetSp(14.0),
+                            fontSize: suSetSp(32.0),
                           ),
                         ),
                       ],
